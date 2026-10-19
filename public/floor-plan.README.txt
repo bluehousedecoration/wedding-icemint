@@ -1,0 +1,3 @@
+วางไฟล์ผังจาก Bluehouse ที่นี่ชื่อ floor-plan.png
+จากนั้นใน src/config/floorPlan.ts ตั้ง imageUrl เป็น '/floor-plan.png'
+และเติม tableMarkers สำหรับไฮไลต์โต๊ะบนภาพ
