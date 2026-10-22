@@ -3,9 +3,15 @@
 ## GitHub Pages (แนะนำ)
 
 1. Push โปรเจกต์ขึ้น GitHub
-2. **Settings → Pages → Build and deployment → GitHub Actions**
-3. Push ไป branch `main` — workflow [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml) จะ build อัตโนมัติ
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions** (ไม่ใช่ Deploy from a branch)
+3. Push ไป branch `main` — workflow [`.github/workflows/deploy-pages.yml`](../.github/workflows/deploy-pages.yml) จะ build อัตโนมัติ  
+   หรือ **Actions → Deploy to GitHub Pages → Re-run all jobs** หลังเปิด Pages แล้ว
 4. URL จะเป็น `https://<username>.github.io/<repo-name>/`
+
+### ขึ้น 404 “There isn’t a GitHub Pages site here”
+
+มักเพราะ **ยังไม่ได้เปิด Pages** หรือ deploy job ล้ม — ดู Actions ว่า job **deploy** เขียวหรือไม่  
+ข้อความ `Ensure GitHub Pages has been enabled` → ไป [Settings → Pages](https://github.com/bluehousedecoration/wedding-icemint/settings/pages) เลือก **GitHub Actions** แล้ว re-run workflow
 
 ## Build มือ (ทดสอบ)
 

@@ -35,10 +35,26 @@ export const siteContent = {
   /** แอนิเมชันเปิดการ์ดครั้งแรกต่อ session บนหน้าแรก */
   introEnabled: true,
   weddingDate: '20 December 2026',
+  /** ISO 8601 — ใช้นับถอยหลังบนหน้าแรก (เวลา stand by งาน) */
+  countdownTarget: '2026-12-20T15:30:00+07:00',
   venue: 'AVA TRIVI STUDIO',
   venueAddress:
     '55/24 ตำบลบางพลับ อำเภอปากเกร็ด จังหวัดนนทบุรี 11120 (ถนนราชพฤกษ์)',
   venueMapUrl: 'https://maps.app.goo.gl/zde8YuzuXEmvgBCV6' as string,
+
+  /** JSON ที่นั่ง live จาก Bluehouse — ว่าง = ใช้แค่ env / seating.json บน Pages */
+  seatingLiveJsonUrl:
+    'https://erp.bluehousedecoration.com/wedding/seating/guest-seating.json' as string,
+
+  dressCode: {
+    title: 'Dress Code',
+    subtitle: 'Smart casual / Semi-formal',
+    items: [
+      'โทนสีที่เข้ากับงาน: น้ำเงินคราม · แชมเปญ · ครีม · greige',
+      'หลีกเลี่ยงชุดสีขาวล้วน (สงวนให้เจ้าบ่าวเจ้าสาว)',
+      'รองเท้าสบาย ๆ — มีพิธีการและถ่ายภาพกลางแจ้ง',
+    ],
+  },
 
   /** VDO Present ก่อนงาน */
   video: {

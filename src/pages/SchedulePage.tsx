@@ -49,6 +49,18 @@ export function SchedulePage() {
         <Timeline items={siteContent.scheduleFull} id="schedule-full-heading" />
       </section>
 
+      <section className="dress-block" aria-labelledby="dress-heading">
+        <h2 id="dress-heading" className="section-heading">
+          {siteContent.dressCode.title}
+        </h2>
+        <p className="sub">{siteContent.dressCode.subtitle}</p>
+        <ul className="dress-list">
+          {siteContent.dressCode.items.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+      </section>
+
       <section className="venue-block" aria-labelledby="venue-heading">
         <h2 id="venue-heading" className="section-heading">
           สถานที่

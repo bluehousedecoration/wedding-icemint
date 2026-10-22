@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { FloorPlanView } from '../components/FloorPlanView'
 import { PageLayout } from '../components/PageLayout'
+import { hallMeta } from '../config/hallLayout'
 import { findGuestByCode, useGuests } from '../hooks/useGuests'
 import { normalizeGuestCode } from '../lib/guestCode'
 
@@ -9,12 +10,18 @@ function SeatDetail({
   table,
   zone,
   seats,
+  tableName,
+  seatLabel,
 }: {
   label: string
   table: number
   zone: string
   seats: number
+  tableName?: string
+  seatLabel?: string
 }) {
+  const isVip = hallMeta.vipTables.includes(table)
+
   return (
     <>
       <header className="hero compact">
@@ -25,8 +32,23 @@ function SeatDetail({
       <dl className="seat-card">
         <div>
           <dt>โต๊ะ</dt>
-          <dd className="table-num">Table {table}</dd>
+          <dd className="table-num">
+            Table {table}
+            {isVip ? <span className="seat-vip-badge"> VIP</span> : null}
+          </dd>
         </div>
+        {tableName ? (
+          <div>
+            <dt>ชื่อโต๊ะ</dt>
+            <dd>{tableName}</dd>
+          </div>
+        ) : null}
+        {seatLabel ? (
+          <div>
+            <dt>ที่นั่ง</dt>
+            <dd>{seatLabel}</dd>
+          </div>
+        ) : null}
         <div>
           <dt>โซน</dt>
           <dd>{zone}</dd>
@@ -83,8 +105,17 @@ export function SeatPage() {
           table={guest.table}
           zone={guest.zone}
           seats={guest.seats}
+          tableName={guest.tableName}
+          seatLabel={guest.seatLabel}
         />
       )}
+
+      {data.source === 'bluehouse' ? (
+        <p className="hint seat-sync-note">
+          ข้อมูลโต๊ะ sync จาก Bluehouse
+          {data.updatedAt ? ` · อัปเดต ${data.updatedAt}` : ''}
+        </p>
+      ) : null}
     </PageLayout>
   )
 }

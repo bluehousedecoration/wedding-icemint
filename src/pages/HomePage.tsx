@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { InvitationIntro } from '../components/InvitationIntro'
 import { PageLayout } from '../components/PageLayout'
+import { WeddingCountdown } from '../components/WeddingCountdown'
 import { siteContent } from '../config/siteContent'
 import { hasSeenIntroThisSession, markIntroSeenThisSession } from '../lib/introSession'
 
@@ -20,6 +21,8 @@ function HomeMainContent() {
         <p className="date">{siteContent.weddingDate}</p>
         <p className="venue">{siteContent.venue}</p>
       </header>
+
+      <WeddingCountdown />
 
       <nav className="actions" aria-label="เมนูหลัก">
         <Link className="action primary" to="/video">

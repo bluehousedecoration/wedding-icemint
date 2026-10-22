@@ -37,7 +37,17 @@ function normalizeRow(r) {
   const table = Number(r.table ?? r.tableNumber ?? r.table_no)
   const zone = r.zone ?? r.side ?? '—'
   const seats = Number(r.seats ?? r.pax ?? 2)
-  return { id, label, table, zone, seats }
+  const tableName = r.tableName ?? r.table_name ?? r.tableTitle ?? ''
+  const seatLabel = r.seatLabel ?? r.seat_label ?? r.seatName ?? ''
+  return {
+    id,
+    label,
+    table,
+    zone,
+    seats,
+    ...(tableName ? { tableName: String(tableName) } : {}),
+    ...(seatLabel ? { seatLabel: String(seatLabel) } : {}),
+  }
 }
 
 function parseCsv(text) {

@@ -6,9 +6,14 @@ export type GuestRecord = {
   table: number
   zone: string
   seats: number
+  /** ชื่อโต๊ะจาก Bluehouse */
+  tableName?: string
+  /** ที่นั่งย่อย เช่น โต๊ะ21-ที่นั่ง3 */
+  seatLabel?: string
 }
 
 export type GuestDatabase = {
   updatedAt: string
+  source?: string
   guests: GuestRecord[]
 }

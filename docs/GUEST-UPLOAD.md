@@ -17,7 +17,9 @@ copy .env.example .env
 npm run dev
 ```
 
-Deploy: ตั้ง **Environment secrets** ใน GitHub Actions (หรือใส่ใน `.env` ตอน build — อย่า commit `.env`)
+Deploy (GitHub Pages): Repo **Settings → Secrets and variables → Actions** → สร้าง secret ชื่อเดียวกับตัวแปรด้านล่าง (`VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, …) แล้ว push `main` — workflow จะ inject ตอน build
+
+Local: ใส่ใน `.env` (อย่า commit)
 
 ## 3. Storage Rules (แนะนำ)
 

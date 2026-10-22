@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import guestDatabase from '../data/guests.json'
+import { fetchGuestDatabase } from '../lib/loadGuestDatabase'
 import type { GuestDatabase, GuestRecord } from '../types/guest'
 import { normalizeGuestCode } from '../lib/guestCode'
 
 const bundled = guestDatabase as GuestDatabase
 
 /**
- * โหลดรายชื่อจาก public/seating.json (sync จาก Bluehouse) ถ้ามี
- * ไม่มีหรือโหลดไม่ได้ → ใช้ guests.json ใน bundle
+ * โหลดรายชื่อ: Bluehouse URL → public/seating.json → guests.json ใน bundle
  */
 export function useGuests() {
   const [data, setData] = useState<GuestDatabase>(bundled)
@@ -15,22 +15,23 @@ export function useGuests() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const base = import.meta.env.BASE_URL.replace(/\/?$/, '/')
-    const url = `${base}seating.json`
+    let cancelled = false
 
-    fetch(url, { cache: 'no-cache' })
-      .then((res) => (res.ok ? res.json() : null))
-      .then((json: GuestDatabase | null) => {
-        if (json?.guests && Array.isArray(json.guests) && json.guests.length > 0) {
-          setData(json)
-        }
+    fetchGuestDatabase()
+      .then((remote) => {
+        if (cancelled) return
+        if (remote) setData(remote)
       })
       .catch(() => {
-        setError(null)
+        if (!cancelled) setError(null)
       })
       .finally(() => {
-        setLoading(false)
+        if (!cancelled) setLoading(false)
       })
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   return { data, error, loading }

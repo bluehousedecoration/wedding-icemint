@@ -2,29 +2,38 @@
 
 หน้า [Wedding → Seating](https://erp.bluehousedecoration.com/wedding/seating) เป็นที่จัดโต๊ะจริง (40 โต๊ะ, VIP 21 & 26)
 
-เว็บ QR **ดึง API จาก ERP โดยตรงไม่ได้** (ต้อง login) — sync ผ่านไฟล์ export แล้วอัปเดต `seating.json`
+## โหมดอัตโนมัติ (แนะนำ)
 
-## ขั้นตอน
+เมื่อ ERP publish JSON แล้ว เว็บแขกโหลดจาก:
 
-1. จัดโต๊ะใน Bluehouse ให้ครบ
-2. Export รายชื่อ + หมายเลขโต๊ะ (JSON หรือ CSV) จาก ERP  
-   - ถ้ายังไม่มีปุ่ม export: ส่งออกจาก Google Sheet ที่ sync กับ Bluehouse หรือ copy เป็น CSV คอลัมน์ `id,label,table,zone,seats`
-3. **`id` ต้องตรงกับรหัสบน QR การ์ด** (ไม่ใช่เลขโต๊ะ)
-4. รัน:
+`https://erp.bluehousedecoration.com/wedding/seating/guest-seating.json`
+
+(ตั้งใน [`siteContent.seatingLiveJsonUrl`](../src/config/siteContent.ts) หรือ override ด้วย `VITE_SEATING_JSON_URL`)
+
+รายละเอียดฝั่ง ERP: **[BLUEHOUSE-ERP-PUBLISH.md](./BLUEHOUSE-ERP-PUBLISH.md)**
+
+ลำดับโหลดในเว็บ: **ERP URL → `seating.json` บน GitHub Pages → `guests.json` ใน bundle**
+
+แก้โต๊ะใน Bluehouse → publish JSON → แขก **รีเฟรช** `/seat?g=...` — **QR ไม่เปลี่ยน**
+
+## โหมด export มือ (สำรอง)
+
+1. Export รายชื่อ + โต๊ะ (JSON/CSV) — คอลัมน์ `id,label,table,zone,seats,tableName,seatLabel`
+2. **`id` = รหัส QR บนการ์ด**
+3. รัน:
 
 ```powershell
 node scripts/import-bluehouse-seating.mjs path\to\bluehouse-export.json
 npm run build
 ```
 
-หรือ dev: วางผลลัพธ์ใน `public/seating.json` แล้วรีเฟรช — แขกโหลดไฟล์นี้โดยไม่ rebuild bundle ก็ได้
+ผลลัพธ์: `src/data/guests.json` + `public/seating.json`
 
 ## ผังบนเว็บ
 
-- ใช้ **SVG 40 โต๊ะ** ตาม layout Bluehouse ([`src/config/hallLayout.ts`](../src/config/hallLayout.ts))
-- แขกสแกน `?g=...` → ไฮไลต์โต๊ะบนผัง + แสดง Table / VIP
-- ถ้ามี PNG export จาก ERP: ตั้ง `imageUrl` ใน [`floorPlan.ts`](../src/config/floorPlan.ts) + `tableMarkers`
+- SVG 40 โต๊ะ [`hallLayout.ts`](../src/config/hallLayout.ts)
+- PNG จาก ERP: [`floorPlan.ts`](../src/config/floorPlan.ts)
 
-## ย้ายโต๊ะก่อนงาน
+## ตัวอย่าง JSON
 
-แก้โต๊ะใน Bluehouse → export ใหม่ → import อีกครั้ง — **QR เดิมไม่เปลี่ยน**
+[`public/guest-seating.example.json`](../public/guest-seating.example.json)
