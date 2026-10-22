@@ -1,23 +1,35 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// GitHub Pages project site: ตั้ง BASE_PATH=/ชื่อ-repo/ ตอน build
-// User site (username.github.io): ปล่อย BASE_PATH ว่าง
-const base = process.env.BASE_PATH ?? '/'
+// GitHub Pages: ตั้ง BASE_PATH=/ชื่อ-repo/ ตอน build — dev บังคับ `/` เสมอ (โดเมนจริง)
+export default defineConfig(({ command }) => {
+  const base =
+    command === 'serve' ? '/' : (process.env.BASE_PATH?.replace(/\/?$/, '/') ?? '/')
 
-export default defineConfig({
+  return {
   base,
   plugins: [react()],
   server: {
-    host: '127.0.0.1',
+    host: true,
     port: 5173,
-    strictPort: true,
-    open: '/seat?g=ICE0284',
+    /** false = ถ้า 5173 ถูกใช้ จะลองพอร์ตถัดไป แทน error เปิดไม่ได้ */
+    strictPort: false,
+    open: '/',
+    watch: {
+      ignored: [
+        '**/AW flies/**',
+        '**/*.crdownload',
+        '**/.crdownload',
+        '**/*.mp4',
+        '**/*.pdf',
+      ],
+    },
   },
   preview: {
-    host: '127.0.0.1',
+    host: true,
     port: 4173,
-    strictPort: true,
-    open: '/seat?g=ICE0284',
+    strictPort: false,
+    open: '/',
   },
+}
 })

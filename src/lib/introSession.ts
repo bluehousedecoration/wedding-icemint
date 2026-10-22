@@ -1,19 +1,12 @@
-export const INTRO_SESSION_KEY = 'ice-mint-intro-seen'
+/** จบ intro แล้วในแท็บนี้ (ไม่ใช้ sessionStorage — รีโหลดหน้า = เล่น intro ใหม่) */
+let introFinishedThisDocument = false
 
-export function hasSeenIntroThisSession(): boolean {
-  try {
-    return sessionStorage.getItem(INTRO_SESSION_KEY) === '1'
-  } catch {
-    return false
-  }
+export function hasIntroFinishedThisDocument(): boolean {
+  return introFinishedThisDocument
 }
 
-export function markIntroSeenThisSession(): void {
-  try {
-    sessionStorage.setItem(INTRO_SESSION_KEY, '1')
-  } catch {
-    /* private mode */
-  }
+export function markIntroFinishedThisDocument(): void {
+  introFinishedThisDocument = true
 }
 
 export function prefersReducedMotion(): boolean {

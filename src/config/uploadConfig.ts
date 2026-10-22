@@ -5,6 +5,8 @@ export const uploadConfig = {
   storageRoot: 'ice-mint-wedding',
 }
 
+import { isMediaApiConfigured } from './mediaApi'
+
 export function isFirebaseConfigured(): boolean {
   const e = import.meta.env
   return Boolean(
@@ -13,4 +15,8 @@ export function isFirebaseConfigured(): boolean {
       e.VITE_FIREBASE_STORAGE_BUCKET &&
       e.VITE_FIREBASE_APP_ID,
   )
+}
+
+export function isGuestShareUploadReady(): boolean {
+  return isMediaApiConfigured() || isFirebaseConfigured()
 }

@@ -1,17 +1,16 @@
 import { useState } from 'react'
 import { GuestPhotoUpload } from '../components/GuestPhotoUpload'
 import { GuestVideoRecorder } from '../components/GuestVideoRecorder'
-import { ExternalButton, PageLayout } from '../components/PageLayout'
-import { isFirebaseConfigured } from '../config/uploadConfig'
+import { PageLayout } from '../components/PageLayout'
+import { isMediaApiConfigured } from '../config/mediaApi'
+import { isGuestShareUploadReady } from '../config/uploadConfig'
 import { siteContent } from '../config/siteContent'
 
 type ShareTab = 'photo' | 'video'
 
 export function SharePage() {
   const { guestShare } = siteContent
-  const uploadReady = isFirebaseConfigured()
-  const photoForm = guestShare.photoFormUrl.trim()
-  const videoForm = guestShare.videoMessageFormUrl.trim()
+  const uploadReady = isGuestShareUploadReady()
   const [tab, setTab] = useState<ShareTab>('photo')
 
   return (
@@ -19,13 +18,13 @@ export function SharePage() {
       <header className="hero compact">
         <p className="eyebrow">Share</p>
         <h1>{guestShare.pageTitle}</h1>
-        <p className="sub">ส่งรูปและคลิปอวยพรถึง Ice & Mint</p>
+        <p className="sub">ส่งรูปและคลิปอวยพรถึง Ice & Mint — ผ่านเว็บเท่านั้น</p>
       </header>
 
       <ol className="instruction-list">
+        <li>กรอกชื่อกล้อง / แหล่งที่มา (เพื่อจัดเก็บเป็นโฟลเดอร์)</li>
         <li>เลือกแท็บรูปภาพ หรือวิดีโออวยพร</li>
-        <li>อนุญาตกล้อง/ไมค์ (วิดีโอ) หรือเลือกรูปจากมือถือ</li>
-        <li>กดส่ง — บ่าวสาวจะได้รับในระบบ cloud</li>
+        <li>อนุญาตกล้อง/ไมค์ (วิดีโอ) หรือเลือกรูปจากมือถือ แล้วกดส่ง</li>
       </ol>
 
       <div className="share-tabs" role="tablist" aria-label="ประเภทการแชร์">
@@ -56,19 +55,10 @@ export function SharePage() {
       ) : (
         <div className="upload-setup-notice">
           <p className="coming-soon">
-            โหมดอัปโหลดบนเว็บกำลังเปิด — บ่าวสาวตั้งค่า Firebase ตาม{' '}
-            <code>docs/GUEST-UPLOAD.md</code>
+            เปิดอัปโหลดเมื่อ deploy Media API (Drive) — ดู{' '}
+            <code>docs/DRIVE-MEDIA-API.md</code>
+            {isMediaApiConfigured() ? null : ' หรือตั้ง Firebase ตาม docs/GUEST-UPLOAD.md'}
           </p>
-          {(photoForm || videoForm) && (
-            <div className="stack-actions">
-              {photoForm ? (
-                <ExternalButton href={photoForm} label="อัปโหลดรูป (ลิงก์สำรอง)" />
-              ) : null}
-              {videoForm ? (
-                <ExternalButton href={videoForm} label="ส่งวิดีโอ (ลิงก์สำรอง)" />
-              ) : null}
-            </div>
-          )}
         </div>
       )}
     </PageLayout>

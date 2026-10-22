@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useVideoRecorder } from '../hooks/useVideoRecorder'
+import { isMediaApiConfigured } from '../config/mediaApi'
 import { uploadGuestVideo, type UploadProgress } from '../lib/guestUpload'
 
 type GuestVideoRecorderProps = {
@@ -9,6 +10,8 @@ type GuestVideoRecorderProps = {
 export function GuestVideoRecorder({ disabled }: GuestVideoRecorderProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [name, setName] = useState('')
+  const [sourceLabel, setSourceLabel] = useState('')
+  const requireSource = isMediaApiConfigured()
   const [progress, setProgress] = useState<UploadProgress | null>(null)
   const [done, setDone] = useState(false)
 
@@ -27,10 +30,18 @@ export function GuestVideoRecorder({ disabled }: GuestVideoRecorderProps) {
 
   async function onSubmit() {
     if (!rec.recordedBlob || disabled) return
+    if (requireSource && !sourceLabel.trim()) {
+      setProgress({
+        percent: 0,
+        state: 'error',
+        error: 'กรุณาระบุชื่อกล้อง / แหล่งที่มา',
+      })
+      return
+    }
     setProgress({ percent: 0, state: 'running' })
     setDone(false)
     try {
-      await uploadGuestVideo(rec.recordedBlob, name, setProgress)
+      await uploadGuestVideo(rec.recordedBlob, name, sourceLabel, setProgress)
       setDone(true)
       rec.clearRecorded()
       rec.stopCamera()
@@ -45,6 +56,20 @@ export function GuestVideoRecorder({ disabled }: GuestVideoRecorderProps) {
 
   return (
     <div className="upload-panel">
+      <label className="field-label" htmlFor="guest-video-source">
+        ชื่อกล้อง / แหล่งที่มา {requireSource ? '(จำเป็น)' : '(แนะนำ)'}
+      </label>
+      <input
+        id="guest-video-source"
+        className="field-input"
+        type="text"
+        placeholder="เช่น iPhone 14 Pro, Samsung S24"
+        value={sourceLabel}
+        onChange={(e) => setSourceLabel(e.target.value)}
+        disabled={disabled}
+        required={requireSource}
+      />
+
       <label className="field-label" htmlFor="guest-video-name">
         ชื่อของคุณ (ไม่บังคับ)
       </label>

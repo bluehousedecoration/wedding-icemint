@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
+import { BottomNav } from './BottomNav'
 import { siteContent } from '../config/siteContent'
 
 type PageLayoutProps = {
@@ -7,24 +8,37 @@ type PageLayoutProps = {
   children: ReactNode
 }
 
+function SiteMapButton() {
+  const href = siteContent.venueMapUrl?.trim() ?? ''
+  if (!href) {
+    return (
+      <span className="site-map-btn site-map-btn--disabled" aria-disabled="true">
+        แผนที่
+      </span>
+    )
+  }
+  return (
+    <a className="site-map-btn" href={href} target="_blank" rel="noreferrer">
+      แผนที่
+    </a>
+  )
+}
+
 export function PageLayout({ title, children }: PageLayoutProps) {
   return (
     <div className="layout">
       <header className="site-bar">
         <Link to="/" className="site-brand">
-          {siteContent.couple}
+          <span className="site-brand-title">{siteContent.couple}</span>
+          <span className="site-brand-date">{siteContent.headerDateLine}</span>
         </Link>
-        {title ? <span className="site-page-title">{title}</span> : null}
+        <div className="site-bar-end">
+          {title ? <span className="site-page-title">{title}</span> : null}
+          <SiteMapButton />
+        </div>
       </header>
       <main className="page">{children}</main>
-      <nav className="bottom-nav" aria-label="เมนูล่าง">
-        <Link to="/">หน้าแรก</Link>
-        <Link to="/video">VDO</Link>
-        <Link to="/photos">รูปภาพ</Link>
-        <Link to="/schedule">กำหนดการ</Link>
-        <Link to="/seat">โต๊ะ</Link>
-        <Link to="/share">แชร์</Link>
-      </nav>
+      <BottomNav />
     </div>
   )
 }
@@ -47,9 +61,10 @@ export function ExternalButton({
   disabled?: boolean
 }) {
   if (disabled || !href.trim()) {
+    const text = /เร็ว\s*ๆ\s*นี้/.test(label) ? label : `${label} — เร็ว ๆ นี้`
     return (
       <span className="action disabled" aria-disabled="true">
-        {label} — เร็ว ๆ นี้
+        {text}
       </span>
     )
   }

@@ -1,16 +1,16 @@
 /**
- * แก้ไฟล์นี้เมื่อมีลิงก์จริง — ไม่ต้องแตะ UI
- * วิดีโอ: ใส่ youtube embed หรือลิงก์ Vimeo
- * รูป: ลิงก์ Google Drive / Google Photos album (Anyone with link)
- * ช่างภาพ: ลิงก์โฟลเดอร์ Drive สำหรับอัปโหลด (แชร์เฉพาะทีมถ่าย)
+ * แก้ไฟล์นี้เมื่อมีเนื้อหา — ไม่ต้องแตะ UI
+ * รูป/VDO/แชร์: โฟลเดอร์ Drive อยู่ฝั่ง Cloud Functions เท่านั้น (docs/DRIVE-MEDIA-API.md)
+ * ใช้ mediaAlbumKey ชี้ไปอัลบั้ม — ไม่ใส่ URL Drive ในไฟล์นี้
  */
+import type { MediaAlbumKey } from './mediaApi'
 
 export type PhotoAlbum = {
   id: string
   title: string
   description: string
-  /** ลิงก์เปิดดาวน์โหลด/ดูอัลบั้ม — ว่าง = ยังไม่เปิด */
-  viewUrl: string
+  /** คีย์อัลบั้มบน Media API */
+  mediaAlbumKey?: MediaAlbumKey
 }
 
 export type ScheduleItem = {
@@ -22,18 +22,28 @@ export type ScheduleItem = {
 export type VideoSection = {
   title: string
   subtitle: string
-  embedUrl: string
-  openUrl: string
+  mediaAlbumKey?: Extract<MediaAlbumKey, 'vdo-present' | 'vdo-wedding-day'>
 }
 
 export const siteContent = {
   couple: 'Ice & Mint',
   coupleFullNames: 'Thanakrit & Arisara',
+  /** แถบด้านบนทุกหน้า — ใต้ชื่อคู่ */
+  headerDateLine: '20 December 2026',
   tagline: 'Our time. Our love. Our forever.',
-  /** การ์ดเชิญ — ไฟล์ใน public/ */
+  /** การ์ดเชิญ v2 — PDF ใน public (เรนเดอร์หน้า–หลังบนเว็บ) */
+  invitationCardPdfUrl: '/wedding-card2.pdf',
+  /** ลำดับหน้า wedding card2.pdf (เริ่มที่ 1): 1=ปก Ice&Mint · 2=Water Blessing ด้านหลัง */
+  invitationPdfFrontPage: 1,
+  invitationPdfBackPage: 2,
+  /** สำรอง JPG ถ้า PDF โหลดไม่ได้ */
   invitationCardUrl: '/invitation-card.jpg',
   /** แอนิเมชันเปิดการ์ดครั้งแรกต่อ session บนหน้าแรก */
   introEnabled: true,
+  /** VDO เปิดเว็บ (public/) — มีไฟล์จะใช้แทนแอนิเมชันการ์ด */
+  introVideoUrl: '/website_open_1080p4.mp4',
+  /** true = แสดงรูป/VDO ตัวอย่างเมื่อยังไม่ตั้ง VITE_MEDIA_API_BASE */
+  mediaDemoUntilDriveReady: true,
   weddingDate: '20 December 2026',
   /** ISO 8601 — ใช้นับถอยหลังบนหน้าแรก (เวลา stand by งาน) */
   countdownTarget: '2026-12-20T15:30:00+07:00',
@@ -60,46 +70,40 @@ export const siteContent = {
   video: {
     title: 'VDO Present',
     subtitle: 'เรื่องราวของเรา',
-    embedUrl: '' as string,
-    openUrl: '' as string,
+    mediaAlbumKey: 'vdo-present',
   } satisfies VideoSection,
 
   /** ไฮไลต์ / คลิปหลังงาน */
   eventRecap: {
     title: 'Wedding Day',
     subtitle: 'วิดีโอและไฮไลต์จากงาน',
-    embedUrl: '' as string,
-    openUrl: '' as string,
+    mediaAlbumKey: 'vdo-wedding-day',
   } satisfies VideoSection,
 
   photoAlbums: [
     {
       id: 'prewedding',
       title: 'Pre-Wedding',
-      description: 'ภาพ Pre-Wedding — เปิดดูและดาวน์โหลดได้',
-      viewUrl: '',
+      description: 'ภาพ Pre-Wedding — ดูและบันทึกลงเครื่องได้',
+      mediaAlbumKey: 'prewedding',
     },
     {
       id: 'wedding-day',
       title: 'Wedding Day',
-      description: 'ภาพวันงาน (เปิดหลังงาน)',
-      viewUrl: '',
-    },
-    {
-      id: 'photo-booth',
-      title: 'Photo Booth',
-      description: 'มุม Photo Booth',
-      viewUrl: '',
+      description: 'ภาพจากช่างภาพในวันงาน — แตะรูปเพื่อดูใหญ่และดาวน์โหลด',
+      mediaAlbumKey: 'wedding-day',
     },
   ] satisfies PhotoAlbum[],
 
   photographer: {
     pageTitle: 'อัปโหลดรูป (ทีมถ่ายภาพ)',
+    /** ลิงก์โฟลเดอร์ Drive — ช่างอัปโหลดตรงใน Drive (ไม่ผ่าน Media API) */
     uploadFolderUrl: '' as string,
     instructions: [
-      'อัปโหลดไฟล์ลงโฟลเดอร์ Drive ด้านล่าง',
-      'ตั้งชื่อโฟลเดอร์ย่อยตามวัน/มุมถ่าย (เช่น ceremony, reception)',
-      'เมื่อ sync แล้ว แอดมินจะอัปเดตลิงก์ “ดูรูป” ให้แขกโหลดได้',
+      'กดปุ่มด้านล่าง → เปิด Google Drive ของทีมถ่าย',
+      'อัปโหลดรูปลงโฟลเดอร์โดยตรง (ลากไฟล์หรือปุ่ม New → File upload)',
+      'แยกโฟลเดอร์ย่อยตามวัน/มุมถ่าย (เช่น ceremony, reception) ตามที่ทีมตกลง',
+      'รูปที่แขกเห็นบนเว็บมาจากโฟลเดอร์ที่ sync กับ Media API — ไม่ใช่โฟลเดอร์นี้โดยอัตโนมัติ',
     ],
   },
 

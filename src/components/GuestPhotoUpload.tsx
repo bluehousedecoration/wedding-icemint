@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { uploadConfig } from '../config/uploadConfig'
 import { uploadGuestPhoto, type UploadProgress } from '../lib/guestUpload'
+import { isMediaApiConfigured } from '../config/mediaApi'
 
 type GuestPhotoUploadProps = {
   disabled?: boolean
@@ -9,10 +10,12 @@ type GuestPhotoUploadProps = {
 export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState('')
+  const [sourceLabel, setSourceLabel] = useState('')
   const [preview, setPreview] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const [progress, setProgress] = useState<UploadProgress | null>(null)
   const [done, setDone] = useState(false)
+  const requireSource = isMediaApiConfigured()
 
   function onPick(f: File | null) {
     if (preview) URL.revokeObjectURL(preview)
@@ -25,9 +28,17 @@ export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
 
   async function onSubmit() {
     if (!file || disabled) return
+    if (requireSource && !sourceLabel.trim()) {
+      setProgress({
+        percent: 0,
+        state: 'error',
+        error: 'กรุณาระบุชื่อกล้อง / แหล่งที่มา',
+      })
+      return
+    }
     setProgress({ percent: 0, state: 'running' })
     try {
-      await uploadGuestPhoto(file, name, setProgress)
+      await uploadGuestPhoto(file, name, sourceLabel, setProgress)
       setDone(true)
       onPick(null)
       if (inputRef.current) inputRef.current.value = ''
@@ -42,6 +53,20 @@ export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
 
   return (
     <div className="upload-panel">
+      <label className="field-label" htmlFor="guest-photo-source">
+        ชื่อกล้อง / แหล่งที่มา {requireSource ? '(จำเป็น)' : '(แนะนำ)'}
+      </label>
+      <input
+        id="guest-photo-source"
+        className="field-input"
+        type="text"
+        placeholder="เช่น iPhone คุณมิ้นท์, กล้อง Canon โต๊ะ 8"
+        value={sourceLabel}
+        onChange={(e) => setSourceLabel(e.target.value)}
+        disabled={disabled}
+        required={requireSource}
+      />
+
       <label className="field-label" htmlFor="guest-photo-name">
         ชื่อของคุณ (ไม่บังคับ)
       </label>
@@ -75,7 +100,7 @@ export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
       </button>
 
       <p className="hint">
-        สูงสุด {uploadConfig.maxPhotoBytes / 1024 / 1024} MB ต่อรูป
+        สูงสุด {uploadConfig.maxPhotoBytes / 1024 / 1024} MB ต่อรูป — ส่งตรงถึงบ่าวสาว (ไม่เปิด Drive)
       </p>
 
       {preview ? (

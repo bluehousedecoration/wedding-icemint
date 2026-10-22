@@ -1,5 +1,6 @@
 import { ref, uploadBytesResumable } from 'firebase/storage'
-import { uploadConfig } from '../config/uploadConfig'
+import { isMediaApiConfigured, uploadGuestShare } from '../config/mediaApi'
+import { isGuestShareUploadReady, uploadConfig } from '../config/uploadConfig'
 import { ensureUploadAuth, getFirebaseStorage } from './firebase'
 
 export type UploadProgress = {
@@ -21,7 +22,7 @@ function randomId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
 }
 
-async function uploadBlob(
+async function uploadBlobFirebase(
   path: string,
   data: Blob | File,
   onProgress: (p: UploadProgress) => void,
@@ -57,27 +58,57 @@ async function uploadBlob(
 export async function uploadGuestPhoto(
   file: File,
   guestName: string,
+  sourceLabel: string,
   onProgress: (p: UploadProgress) => void,
 ): Promise<void> {
   if (file.size > uploadConfig.maxPhotoBytes) {
     throw new Error(`รูปใหญ่เกิน ${uploadConfig.maxPhotoBytes / 1024 / 1024} MB`)
   }
+
+  const label = sourceLabel.trim()
+  if (isMediaApiConfigured()) {
+    if (!label) throw new Error('กรุณาระบุชื่อกล้อง / แหล่งที่มา')
+    await uploadGuestShare('photo', label, file, file.name, (percent) =>
+      onProgress({ percent, state: 'running' }),
+    )
+    onProgress({ percent: 100, state: 'success' })
+    return
+  }
+
   const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
   const slug = safeSlug(guestName) || 'guest'
   const path = `${uploadConfig.storageRoot}/photos/${slug}_${randomId()}.${ext}`
-  await uploadBlob(path, file, onProgress)
+  await uploadBlobFirebase(path, file, onProgress)
 }
 
 export async function uploadGuestVideo(
   blob: Blob,
   guestName: string,
+  sourceLabel: string,
   onProgress: (p: UploadProgress) => void,
 ): Promise<void> {
   if (blob.size > uploadConfig.maxVideoBytes) {
     throw new Error(`วิดีโอใหญ่เกิน ${uploadConfig.maxVideoBytes / 1024 / 1024} MB`)
   }
+
+  const label = sourceLabel.trim()
+  if (isMediaApiConfigured()) {
+    if (!label) throw new Error('กรุณาระบุชื่อกล้อง / แหล่งที่มา')
+    const ext = blob.type.includes('mp4') ? 'mp4' : 'webm'
+    const fileName = `blessing-${Date.now()}.${ext}`
+    await uploadGuestShare('video', label, blob, fileName, (percent) =>
+      onProgress({ percent, state: 'running' }),
+    )
+    onProgress({ percent: 100, state: 'success' })
+    return
+  }
+
   const ext = blob.type.includes('mp4') ? 'mp4' : 'webm'
   const slug = safeSlug(guestName) || 'guest'
   const path = `${uploadConfig.storageRoot}/videos/${slug}_${randomId()}.${ext}`
-  await uploadBlob(path, blob, onProgress)
+  await uploadBlobFirebase(path, blob, onProgress)
+}
+
+export function isGuestUploadConfigured(): boolean {
+  return isGuestShareUploadReady()
 }

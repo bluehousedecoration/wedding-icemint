@@ -11,6 +11,7 @@ export function PhotographerUploadPage() {
       <header className="hero compact">
         <p className="eyebrow">Internal</p>
         <h1>{photographer.pageTitle}</h1>
+        <p className="sub">อัปโหลดตรง Google Drive — ไม่ผ่านหน้าแชร์ของแขก</p>
       </header>
 
       <ol className="instruction-list">
@@ -22,13 +23,16 @@ export function PhotographerUploadPage() {
       <div className="stack-actions">
         <ExternalButton
           href={photographer.uploadFolderUrl}
-          label="เปิดโฟลเดอร์อัปโหลด (Drive)"
+          label="เปิดโฟลเดอร์ Drive (อัปโหลดตรง)"
           disabled={!ready}
         />
       </div>
 
       {!ready ? (
-        <p className="hint">ลิงก์โฟลเดอร์อัปโหลดจะเปิดให้ทีมถ่ายเร็ว ๆ นี้</p>
+        <p className="hint">
+          ใส่ลิงก์โฟลเดอร์ใน <code>siteContent.photographer.uploadFolderUrl</code>{' '}
+          (รูปแบบ https://drive.google.com/drive/folders/…)
+        </p>
       ) : null}
     </PageLayout>
   )

@@ -1,0 +1,9 @@
+{
+  "_comment": "ทดสอบ: แทน FOLDER_ID ด้วย ID โฟลเดอร์เดียว — ทุกอัลบั้มแสดงไฟล์ชุดเดียวกัน",
+  "vdo-present": "FOLDER_ID",
+  "vdo-wedding-day": "FOLDER_ID",
+  "prewedding": "FOLDER_ID",
+  "wedding-day": "FOLDER_ID",
+  "guest-photos": "FOLDER_ID",
+  "guest-videos": "FOLDER_ID"
+}

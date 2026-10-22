@@ -14,12 +14,13 @@
   --border: var(--w-greige);
   --code-bg: var(--w-cream-deep);
 
-  --sans: 'Segoe UI', system-ui, Roboto, sans-serif;
-  --heading: Georgia, 'Times New Roman', 'Segoe UI', serif;
+  --sans: 'Noto Sans Thai', 'Segoe UI', system-ui, sans-serif;
+  --heading: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.02em;
+  font: 17px/1.65 var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.01em;
   color-scheme: light;
   color: var(--text);
   background: var(--bg);
@@ -30,6 +31,7 @@
 
   @media (max-width: 1024px) {
     font-size: 16px;
+    line-height: 1.7;
   }
 }
 
@@ -53,8 +55,9 @@ body {
 h1,
 h2 {
   font-family: var(--heading);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--text-h);
+  letter-spacing: 0.03em;
 }
 
 p {

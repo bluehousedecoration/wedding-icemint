@@ -1,24 +1,20 @@
 {
   "updatedAt": "2026-10-22",
-  "source": "bluehouse",
+  "source": "csv",
   "guests": [
     {
       "id": "ICE0284",
       "label": "คุณ Ice & Family",
       "table": 21,
       "zone": "Family & Friends",
-      "seats": 2,
-      "tableName": "ญาติและครอบครัวเจ้าบ่าว(1)",
-      "seatLabel": "โต๊ะ21-ที่นั่ง1"
+      "seats": 2
     },
     {
       "id": "ICE0001",
       "label": "คุณ สมชาย ใจดี",
       "table": 18,
       "zone": "Family & Friends",
-      "seats": 2,
-      "tableName": "เพื่อนเจ้าสาว",
-      "seatLabel": "โต๊ะ18-ที่นั่ง2"
+      "seats": 2
     }
   ]
 }

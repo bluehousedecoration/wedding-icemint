@@ -1,10 +1,11 @@
 {
-  "updatedAt": "2026-10-12",
+  "updatedAt": "2026-10-22",
+  "source": "csv",
   "guests": [
     {
       "id": "ICE0284",
       "label": "คุณ Ice & Family",
-      "table": 8,
+      "table": 21,
       "zone": "Family & Friends",
       "seats": 2
     },

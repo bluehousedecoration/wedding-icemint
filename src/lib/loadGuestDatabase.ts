@@ -8,6 +8,8 @@ function isValidDb(json: unknown): json is GuestDatabase {
 }
 
 /** ลำดับ: env ERP → siteContent URL → seating.json บน Pages */
+const FETCH_MS = 8_000
+
 export function getSeatingSourceUrls(): string[] {
   const urls: string[] = []
   const fromEnv = import.meta.env.VITE_SEATING_JSON_URL?.trim()
@@ -17,15 +19,24 @@ export function getSeatingSourceUrls(): string[] {
   if (fromConfig && fromConfig !== fromEnv) urls.push(fromConfig)
 
   const base = import.meta.env.BASE_URL.replace(/\/?$/, '/')
-  urls.push(`${base}seating.json`)
+  const localUrl = `${base}seating.json`
 
+  /** บน local ใช้ seating.json ก่อน — ไม่รอ ERP/CORS */
+  if (import.meta.env.DEV) {
+    return [localUrl, ...urls.filter((u) => u !== localUrl)]
+  }
+
+  urls.push(localUrl)
   return urls
 }
 
 export async function fetchGuestDatabase(): Promise<GuestDatabase | null> {
   for (const url of getSeatingSourceUrls()) {
     try {
-      const res = await fetch(url, { cache: 'no-cache' })
+      const res = await fetch(url, {
+        cache: 'no-cache',
+        signal: AbortSignal.timeout(FETCH_MS),
+      })
       if (!res.ok) continue
       const json: unknown = await res.json()
       if (isValidDb(json)) return json
