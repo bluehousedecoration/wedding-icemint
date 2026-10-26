@@ -1,24 +1,41 @@
 {
-  "updatedAt": "2026-10-22",
+  "updatedAt": "2026-10-26T12:00:00+07:00",
   "source": "bluehouse",
-  "guests": [
+  "layout": {
+    "floorPlanImage": "/wedding/floor-plan-v3.png",
+    "entrance": { "x": 78, "y": 94 },
+    "aisleX": 50
+  },
+  "tables": [
     {
-      "id": "ICE0284",
-      "label": "คุณ Ice & Family",
-      "table": 21,
-      "zone": "ฝ่ายชาย",
-      "seats": 2,
+      "tableNo": 21,
       "tableName": "ญาติและครอบครัวเจ้าบ่าว(1)",
-      "seatLabel": "โต๊ะ21-ที่นั่ง1"
-    },
+      "posX": 58,
+      "posY": 24,
+      "capacity": 10,
+      "isVip": true
+    }
+  ],
+  "assignments": [
     {
-      "id": "ICE0001",
-      "label": "คุณ สมชาย ใจดี",
-      "table": 18,
-      "zone": "ฝ่ายหญิง",
-      "seats": 2,
-      "tableName": "เพื่อนเจ้าสาว",
-      "seatLabel": "โต๊ะ18-ที่นั่ง2"
+      "tableNo": 21,
+      "seatNo": 1,
+      "displayName": "ไอซ์ RSU",
+      "guestSource": "RSU",
+      "side": "groom",
+      "category": null,
+      "tableName": "ญาติและครอบครัวเจ้าบ่าว(1)"
+    }
+  ],
+  "searchIndex": [
+    {
+      "displayName": "ไอซ์ RSU",
+      "tableNo": 21,
+      "seatNo": 1,
+      "tableName": "ญาติและครอบครัวเจ้าบ่าว(1)",
+      "guestSource": "RSU",
+      "zone": "ฝ่ายชาย",
+      "category": null
     }
   ]
 }

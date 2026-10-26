@@ -1,20 +1,392 @@
 {
-  "updatedAt": "2026-10-22",
-  "source": "csv",
-  "guests": [
+  "updatedAt": "2026-10-26T07:25:02.139Z",
+  "source": "bluehouse",
+  "layout": {
+    "floorPlanImage": "/floor-plan-v3.png",
+    "entrance": {
+      "x": 78,
+      "y": 94
+    },
+    "aisleX": 50
+  },
+  "tables": [
     {
-      "id": "ICE0284",
-      "label": "คุณ Ice & Family",
-      "table": 21,
-      "zone": "Family & Friends",
-      "seats": 2
+      "tableNo": 15,
+      "tableName": null,
+      "posX": 19,
+      "posY": 17,
+      "capacity": 10,
+      "isVip": false
     },
     {
-      "id": "ICE0001",
-      "label": "คุณ สมชาย ใจดี",
-      "table": 18,
-      "zone": "Family & Friends",
-      "seats": 2
+      "tableNo": 13,
+      "tableName": null,
+      "posX": 19,
+      "posY": 24,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 14,
+      "tableName": null,
+      "posX": 31,
+      "posY": 24,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 1,
+      "tableName": null,
+      "posX": 19,
+      "posY": 31,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 2,
+      "tableName": null,
+      "posX": 31,
+      "posY": 31,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 5,
+      "tableName": null,
+      "posX": 19,
+      "posY": 38,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 3,
+      "tableName": null,
+      "posX": 31,
+      "posY": 38,
+      "capacity": 10,
+      "isVip": true
+    },
+    {
+      "tableNo": 6,
+      "tableName": null,
+      "posX": 19,
+      "posY": 45,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 4,
+      "tableName": null,
+      "posX": 31,
+      "posY": 45,
+      "capacity": 10,
+      "isVip": true
+    },
+    {
+      "tableNo": 7,
+      "tableName": null,
+      "posX": 19,
+      "posY": 52,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 16,
+      "tableName": null,
+      "posX": 31,
+      "posY": 52,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 8,
+      "tableName": null,
+      "posX": 19,
+      "posY": 59,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 17,
+      "tableName": null,
+      "posX": 31,
+      "posY": 59,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 9,
+      "tableName": null,
+      "posX": 19,
+      "posY": 66,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 11,
+      "tableName": null,
+      "posX": 31,
+      "posY": 66,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 10,
+      "tableName": null,
+      "posX": 19,
+      "posY": 73,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 12,
+      "tableName": null,
+      "posX": 31,
+      "posY": 73,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 19,
+      "tableName": null,
+      "posX": 19,
+      "posY": 80,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 18,
+      "tableName": null,
+      "posX": 31,
+      "posY": 80,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 20,
+      "tableName": null,
+      "posX": 19,
+      "posY": 87,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 29,
+      "tableName": null,
+      "posX": 70,
+      "posY": 17,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 28,
+      "tableName": null,
+      "posX": 70,
+      "posY": 24,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 21,
+      "tableName": null,
+      "posX": 58,
+      "posY": 24,
+      "capacity": 10,
+      "isVip": true
+    },
+    {
+      "tableNo": 22,
+      "tableName": null,
+      "posX": 70,
+      "posY": 31,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 26,
+      "tableName": null,
+      "posX": 58,
+      "posY": 31,
+      "capacity": 10,
+      "isVip": true
+    },
+    {
+      "tableNo": 23,
+      "tableName": null,
+      "posX": 70,
+      "posY": 38,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 25,
+      "tableName": null,
+      "posX": 58,
+      "posY": 38,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 24,
+      "tableName": null,
+      "posX": 70,
+      "posY": 45,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 27,
+      "tableName": null,
+      "posX": 58,
+      "posY": 45,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 31,
+      "tableName": null,
+      "posX": 70,
+      "posY": 52,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 30,
+      "tableName": null,
+      "posX": 58,
+      "posY": 52,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 32,
+      "tableName": null,
+      "posX": 70,
+      "posY": 59,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 33,
+      "tableName": null,
+      "posX": 58,
+      "posY": 59,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 35,
+      "tableName": null,
+      "posX": 70,
+      "posY": 66,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 34,
+      "tableName": null,
+      "posX": 58,
+      "posY": 66,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 36,
+      "tableName": null,
+      "posX": 70,
+      "posY": 73,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 37,
+      "tableName": null,
+      "posX": 58,
+      "posY": 73,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 38,
+      "tableName": null,
+      "posX": 70,
+      "posY": 80,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 39,
+      "tableName": null,
+      "posX": 58,
+      "posY": 80,
+      "capacity": 10,
+      "isVip": false
+    },
+    {
+      "tableNo": 40,
+      "tableName": null,
+      "posX": 70,
+      "posY": 87,
+      "capacity": 10,
+      "isVip": false
+    }
+  ],
+  "assignments": [
+    {
+      "tableNo": 21,
+      "seatNo": 1,
+      "displayName": "ไอซ์ RSU",
+      "guestSource": "RSU",
+      "side": "groom",
+      "category": null,
+      "tableName": "ญาติและครอบครัวเจ้าบ่าว(1)"
+    },
+    {
+      "tableNo": 8,
+      "seatNo": 2,
+      "displayName": "ไอซ์ PMS",
+      "guestSource": "PMS",
+      "side": "groom",
+      "category": null,
+      "tableName": "เพื่อนเจ้าบ่าว"
+    },
+    {
+      "tableNo": 3,
+      "seatNo": 1,
+      "displayName": "ไอซ์ บ้าน",
+      "guestSource": "บ้าน",
+      "side": "groom",
+      "category": null,
+      "tableName": "VIP"
+    }
+  ],
+  "searchIndex": [
+    {
+      "displayName": "ไอซ์ RSU",
+      "tableNo": 21,
+      "seatNo": 1,
+      "tableName": "ญาติและครอบครัวเจ้าบ่าว(1)",
+      "guestSource": "RSU",
+      "zone": "ฝ่ายชาย",
+      "category": null
+    },
+    {
+      "displayName": "ไอซ์ PMS",
+      "tableNo": 8,
+      "seatNo": 2,
+      "tableName": "เพื่อนเจ้าบ่าว",
+      "guestSource": "PMS",
+      "zone": "เพื่อน",
+      "category": null
+    },
+    {
+      "displayName": "ไอซ์ บ้าน",
+      "tableNo": 3,
+      "seatNo": 1,
+      "tableName": "VIP",
+      "guestSource": "บ้าน",
+      "zone": "ครอบครัว",
+      "category": null
     }
   ]
 }

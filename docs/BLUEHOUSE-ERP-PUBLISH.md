@@ -8,58 +8,59 @@
 https://erp.bluehousedecoration.com/wedding/seating/guest-seating.json
 ```
 
+- API โดยตรง: `GET {NEXT_PUBLIC_API_URL}/public/wedding/guest-seating.json`
+- Next.js proxy: `bluehouse-erp-frontend/src/app/wedding/seating/guest-seating.json/route.ts`
+
 เว็บ wedding-icemint ตั้งค่า default ไว้ที่ [`siteContent.seatingLiveJsonUrl`](../src/config/siteContent.ts) (override ด้วย `VITE_SEATING_JSON_URL` ตอน build ได้)
 
-## CORS (บังคับ)
+## CORS
 
-Response ต้องมี header ให้ GitHub Pages เรียกจาก browser:
+Response จาก API ต้องอนุญาต origin ของเว็บแขก เช่น `https://bluehousedecoration.github.io` และ `http://127.0.0.1:5173`
 
-```
-Access-Control-Allow-Origin: https://bluehousedecoration.github.io
-Access-Control-Allow-Methods: GET
-```
-
-Dev local: เพิ่ม `http://127.0.0.1:5173` หรือใช้ `*` ชั่วคราว (ไม่แนะนำ production)
-
-## JSON schema
+## JSON schema (v2 — ค้นชื่อ + ผัง interactive)
 
 ดูตัวอย่าง [`public/guest-seating.example.json`](../public/guest-seating.example.json)
 
 | ฟิลด์ | บังคับ | หมายเหตุ |
 |--------|--------|----------|
-| `updatedAt` | ใช่ | ISO date `YYYY-MM-DD` — ใช้ cache bust |
+| `updatedAt` | ใช่ | ISO datetime — ใช้ poll / cache bust |
 | `source` | ไม่ | `"bluehouse"` |
-| `guests[]` | ใช่ | อย่างน้อย 1 แถว |
-| `guests[].id` | ใช่ | รหัส QR บนการ์ด (`ICE0284`) — **ห้ามเปลี่ยน** |
-| `guests[].label` | ใช่ | ชื่อแสดงบนเว็บ |
-| `guests[].table` | ใช่ | 1–40 |
-| `guests[].zone` | ใช่ | เช่น ฝ่ายชาย / ฝ่ายหญิง |
-| `guests[].seats` | ใช่ | จำนวนที่นั่งใน QR |
-| `guests[].tableName` | ไม่ | ชื่อโต๊ะใน ERP |
-| `guests[].seatLabel` | ไม่ | เช่น `โต๊ะ21-ที่นั่ง3` |
+| `layout` | ใช่ | จุดทางเข้า + แกน aisle + path ภาพผัง |
+| `layout.entrance` | ใช่ | `{ x, y }` เปอร์เซ็นต์บนผัง |
+| `layout.aisleX` | ใช่ | แกนกลางทางเดิน (%) |
+| `tables[]` | ใช่ | ตำแหน่งโต๊ะจาก ERP (`pos_x/pos_y`) |
+| `assignments[]` | ใช่ | ที่นั่งในโต๊ะ (read-only บนเว็บแขก) |
+| `searchIndex[]` | ใช่ | ค้นชื่อบนซองเชิญ — **ไม่ใช้ QR แล้ว** |
 
-**อย่าใส่** เบอร์โทร ที่อยู่ ข้อมูลส่วนตัว — ไฟล์เปิดสาธารณะ
+**ห้าม** ใส่เบอร์โทร / notes ส่วนตัว — ไฟล์เปิดสาธารณะ
 
-## เมื่อไหร่ generate ใหม่
+## เมื่อไหร่ publish ใหม่
 
-- ลากแขกไปโต๊ะ / ย้ายโต๊ะ / บันทึกชื่อโต๊ะ
-- หลัง publish แขก **รีเฟรช** `/seat?g=...` จะเห็นโต๊ะใหม่ (QR เดิม)
+ERP publish อัตโนมัติ (debounce ~1.5s) หลัง:
 
-## QR code ใน ERP
+- จัดที่นั่ง / ย้ายโต๊ะ / แก้แขก
+- บันทึกตำแหน่งโต๊ะ (`จัดตำแหน่งโต๊ะ`)
+- บันทึกจุดทางเข้า (`ตั้งค่าเส้นทางเว็บแขก`)
 
-แต่ละแขกหรือกลุ่มครอบครัวต้องมี **`guestCode` / `id`** คงที่ ตรงกับ CSV `npm run qr:export` — ไม่ใช่เลขโต๊ะ
+แขกเปิด `/seat` — โหลดซ้ำทุก ~15 วินาที
 
-## ทดสอบก่อนเชื่อม ERP
+## มาร์กตำแหน่งโต๊ะ (ERP)
 
-1. วาง JSON ชั่วคราวที่ URL ด้านบน หรือ
-2. Export มือ → `npm run seating:import export.json` → push `public/seating.json`
+1. แท็บ **ผังจัดโต๊ะ** → **จัดตำแหน่งโต๊ะ** → ลากวงโต๊ะ → **บันทึกตำแหน่ง**
+2. ตั้ง **ทางเข้า X/Y** และ **แกนกลางทางเดิน** → **บันทึกเส้นทาง**
+3. รัน migration ครั้งเดียว (ถ้ายังไม่มีคอลัมน์):
 
-## Pseudo-code (ฝั่ง ERP)
-
-```text
-onSeatingSaved():
-  rows = map guests to { id, label, table, zone, seats, tableName, seatLabel }
-  payload = { updatedAt: today, source: "bluehouse", guests: rows }
-  writeFile("guest-seating.json", JSON.stringify(payload))
-  // หรือ upload ไป object storage + CDN
+```powershell
+cd D:\001_bluehouse-erp
+node scripts/migrate-wedding-floor-layout.js
 ```
+
+## ทดสอบก่อน production
+
+1. `POST /wedding/publish-guest-seating` (login ERP) หรือแก้ seating ใน ERP
+2. เปิด `https://erp.bluehousedecoration.com/wedding/seating/guest-seating.json`
+3. Local dev เว็บแขก: `VITE_SEATING_LIVE=1 npm run dev` เพื่อบังคับใช้ ERP แทน `public/seating.json`
+
+## Legacy
+
+รูปแบบเก่า `{ guests: [...] }` ยังรองรับในเว็บแขก (แปลงเป็น snapshot ชั่วคราว) — export มือจาก `npm run seating:import`

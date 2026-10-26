@@ -29,5 +29,5 @@ export const hallTables = buildHallTables()
 
 export const hallMeta = {
   tableCount: 40,
-  vipTables: [21, 26] as number[],
+  vipTables: [3, 4, 21, 26] as number[],
 }

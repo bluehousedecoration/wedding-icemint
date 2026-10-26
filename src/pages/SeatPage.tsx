@@ -1,121 +1,121 @@
-import { Link, useSearchParams } from 'react-router-dom'
-import { FloorPlanView } from '../components/FloorPlanView'
+import { useState } from 'react'
+import { GuestInteractiveFloorPlan } from '../components/GuestInteractiveFloorPlan'
+import { GuestNameSearch } from '../components/GuestNameSearch'
 import { PageLayout } from '../components/PageLayout'
-import { hallMeta } from '../config/hallLayout'
-import { findGuestByCode, useGuests } from '../hooks/useGuests'
-import { normalizeGuestCode } from '../lib/guestCode'
+import { useSeatingSnapshot } from '../hooks/useSeatingSnapshot'
+import { entryToSelectedGuest } from '../lib/seatingSnapshot'
+import type { SearchIndexEntry, SelectedGuest } from '../types/seating'
 
-function SeatDetail({
-  label,
-  table,
-  zone,
-  seats,
-  tableName,
-  seatLabel,
+function SeatInfoCard({
+  guest,
+  isVip,
 }: {
-  label: string
-  table: number
-  zone: string
-  seats: number
-  tableName?: string
-  seatLabel?: string
+  guest: SelectedGuest
+  isVip: boolean
 }) {
-  const isVip = hallMeta.vipTables.includes(table)
 
   return (
     <>
       <header className="hero compact">
         <p className="eyebrow">Welcome</p>
-        <h1>{label}</h1>
+        <h1>{guest.displayName}</h1>
       </header>
 
       <dl className="seat-card">
         <div>
           <dt>โต๊ะ</dt>
           <dd className="table-num">
-            Table {table}
+            Table {guest.tableNo}
             {isVip ? <span className="seat-vip-badge"> VIP</span> : null}
           </dd>
         </div>
-        {tableName ? (
+        {guest.tableName ? (
           <div>
             <dt>ชื่อโต๊ะ</dt>
-            <dd>{tableName}</dd>
+            <dd>{guest.tableName}</dd>
           </div>
         ) : null}
-        {seatLabel ? (
+        {guest.seatNo ? (
           <div>
             <dt>ที่นั่ง</dt>
-            <dd>{seatLabel}</dd>
+            <dd>
+              โต๊ะ{guest.tableNo}-ที่นั่ง{guest.seatNo}
+            </dd>
           </div>
         ) : null}
-        <div>
-          <dt>โซน</dt>
-          <dd>{zone}</dd>
-        </div>
-        <div>
-          <dt>จำนวนที่นั่ง</dt>
-          <dd>{seats} Seats</dd>
-        </div>
+        {guest.zone ? (
+          <div>
+            <dt>โซน</dt>
+            <dd>{guest.zone}</dd>
+          </div>
+        ) : null}
+        {guest.guestSource ? (
+          <div>
+            <dt>ที่มา</dt>
+            <dd>{guest.guestSource}</dd>
+          </div>
+        ) : null}
       </dl>
-
-      <FloorPlanView table={table} />
     </>
   )
 }
 
 export function SeatPage() {
-  const [params] = useSearchParams()
-  const raw = params.get('g') ?? params.get('guest') ?? ''
-  const code = raw ? normalizeGuestCode(raw) : null
-  const { data, error, loading } = useGuests()
-  const guest = findGuestByCode(data, code)
+  const { data, loading, error } = useSeatingSnapshot({ poll: true })
+  const [selected, setSelected] = useState<SelectedGuest | null>(null)
+
+  const onPick = (entry: SearchIndexEntry) => {
+    const guest = entryToSelectedGuest(entry)
+    if (!guest) {
+      alert('ยังไม่ได้จัดโต๊ะ — ติดต่อเจ้าภาพ')
+      return
+    }
+    setSelected(guest)
+  }
+
+  const hasMap = data.tables.length > 0
 
   return (
     <PageLayout title="โต๊ะของฉัน">
-      {!code ? (
-        <>
-          <header className="hero compact">
-            <p className="eyebrow">Find My Seat</p>
-            <h1>โต๊ะของฉัน</h1>
-          </header>
-          <p className="sub">
-            สแกน QR บนการ์ดเชิญ หรือเปิดลิงก์ที่มีรหัสแขก เช่น{' '}
-            <code>?g=ICE0284</code>
-          </p>
-          <p className="hint">
-            ตัวอย่างทดสอบ:{' '}
-            <Link to="/seat?g=ICE0284">เปิดรหัส ICE0284</Link>
-          </p>
-        </>
-      ) : loading ? (
-        <p className="status">กำลังโหลดที่นั่ง...</p>
-      ) : error ? (
-        <p className="status error">{error}</p>
-      ) : !guest ? (
-        <>
-          <p className="status error">ไม่พบรหัสแขก — ตรวจสอบ QR บนการ์ดอีกครั้ง</p>
-          <Link className="action back" to="/seat">
-            ลองใหม่
-          </Link>
-        </>
-      ) : (
-        <SeatDetail
-          label={guest.label}
-          table={guest.table}
-          zone={guest.zone}
-          seats={guest.seats}
-          tableName={guest.tableName}
-          seatLabel={guest.seatLabel}
-        />
-      )}
+      {!selected ? (
+        <header className="hero compact">
+          <p className="eyebrow">Find My Seat</p>
+          <h1>โต๊ะของฉัน</h1>
+        </header>
+      ) : null}
 
-      {data.source === 'bluehouse' ? (
-        <p className="hint seat-sync-note">
-          ข้อมูลโต๊ะ sync จาก Bluehouse
-          {data.updatedAt ? ` · อัปเดต ${data.updatedAt}` : ''}
+      <GuestNameSearch
+        searchIndex={data.searchIndex}
+        loading={loading}
+        onSelect={onPick}
+      />
+
+      {!selected ? (
+        <p className="sub seat-intro">
+          พิมพ์ชื่อให้ตรงกับ<strong>ซองเชิญ</strong> แล้วเลือกจากรายการ — เส้นแดงจะนำไปโต๊ะของคุณ
         </p>
       ) : null}
+
+      {error ? <p className="status error">{error}</p> : null}
+
+      {selected ? (
+        <SeatInfoCard
+          guest={selected}
+          isVip={Boolean(data.tables.find((t) => t.tableNo === selected.tableNo)?.isVip)}
+        />
+      ) : null}
+
+      {loading && !hasMap ? (
+        <p className="status">กำลังโหลดผัง...</p>
+      ) : hasMap ? (
+        <GuestInteractiveFloorPlan
+          snapshot={data}
+          highlightTableNo={selected?.tableNo ?? null}
+          showNavigation={Boolean(selected)}
+        />
+      ) : (
+        <p className="status">ยังโหลดผังไม่ได้ — ลองรีเฟรช</p>
+      )}
     </PageLayout>
   )
 }

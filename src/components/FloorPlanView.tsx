@@ -1,43 +1,30 @@
-import { floorPlanConfig, getTableMarker } from '../config/floorPlan'
 import { hallMeta } from '../config/hallLayout'
+import { getFloorTablePosition } from '../config/weddingFloorLayout'
+import type { PublicSeatingSnapshot } from '../types/seating'
+import { GuestInteractiveFloorPlan } from './GuestInteractiveFloorPlan'
 import { HallFloorPlan } from './HallFloorPlan'
 
 type FloorPlanViewProps = {
   table: number
+  snapshot: PublicSeatingSnapshot
 }
 
-export function FloorPlanView({ table }: FloorPlanViewProps) {
-  const { imageUrl, imageAlt } = floorPlanConfig
-  const hasImage = Boolean(imageUrl.trim())
-  const marker = hasImage ? getTableMarker(table) : undefined
+export function FloorPlanView({ table, snapshot }: FloorPlanViewProps) {
+  const hasLiveTables = snapshot.tables.length > 0
   const useHallSvg = table >= 1 && table <= hallMeta.tableCount
 
-  if (hasImage) {
+  if (hasLiveTables) {
     return (
-      <section className="floor-plan" aria-label="ผังโต๊ะ">
-        <p className="floor-title">ผังที่นั่ง</p>
-        <div className="floor-image-wrap">
-          <img className="floor-image" src={imageUrl} alt={imageAlt} />
-          {marker ? (
-            <span
-              className="floor-marker"
-              style={{
-                left: `${marker.xPercent}%`,
-                top: `${marker.yPercent}%`,
-              }}
-              aria-label={`โต๊ะ ${table}`}
-            >
-              {table}
-            </span>
-          ) : null}
-        </div>
-        {!marker && useHallSvg ? (
-          <p className="floor-note">
-            โต๊ะของคุณ: <strong>Table {table}</strong>
-          </p>
-        ) : null}
-      </section>
+      <GuestInteractiveFloorPlan
+        snapshot={snapshot}
+        highlightTableNo={table}
+        showNavigation
+      />
     )
+  }
+
+  if (useHallSvg && getFloorTablePosition(table)) {
+    return <HallFloorPlan activeTable={table} />
   }
 
   if (useHallSvg) {

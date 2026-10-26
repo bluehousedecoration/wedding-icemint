@@ -1,6 +1,6 @@
 # Sync ผังและรายชื่อจาก Bluehouse ERP
 
-หน้า [Wedding → Seating](https://erp.bluehousedecoration.com/wedding/seating) เป็นที่จัดโต๊ะจริง (40 โต๊ะ, VIP 21 & 26)
+หน้า [Wedding → Seating](https://erp.bluehousedecoration.com/wedding/seating) เป็นที่จัดโต๊ะจริง
 
 ## โหมดอัตโนมัติ (แนะนำ)
 
@@ -8,31 +8,35 @@
 
 `https://erp.bluehousedecoration.com/wedding/seating/guest-seating.json`
 
-(ตั้งใน [`siteContent.seatingLiveJsonUrl`](../src/config/siteContent.ts) หรือ override ด้วย `VITE_SEATING_JSON_URL`)
-
 รายละเอียดฝั่ง ERP: **[BLUEHOUSE-ERP-PUBLISH.md](./BLUEHOUSE-ERP-PUBLISH.md)**
 
-ลำดับโหลดในเว็บ: **ERP URL → `seating.json` บน GitHub Pages → `guests.json` ใน bundle**
+ลำดับโหลดในเว็บ (production): **ERP URL → `public/seating.json` → แปลงจาก bundle**
 
-แก้โต๊ะใน Bluehouse → publish JSON → แขก **รีเฟรช** `/seat?g=...` — **QR ไม่เปลี่ยน**
+- Dev ปกติ: `public/seating.json` ก่อน ERP (ไม่ต้อง CORS)
+- Dev ทดสอบ live: `VITE_SEATING_LIVE=1 npm run dev`
+
+แขกค้นหา **ชื่อบนซองเชิญ** จาก `searchIndex` — ไม่ใช้ QR เป็นหลัก
+
+## มาร์กโต๊ะ + เส้นทาง
+
+ทำใน ERP เท่านั้น:
+
+- **จัดตำแหน่งโต๊ะ** — ลากวงให้ตรงภาพ
+- **ตั้งค่าเส้นทางเว็บแขก** — จุดทางเข้า + แกน aisle
 
 ## โหมด export มือ (สำรอง)
 
-1. Export รายชื่อ + โต๊ะ (JSON/CSV) — คอลัมน์ `id,label,table,zone,seats,tableName,seatLabel`
-2. **`id` = รหัส QR บนการ์ด**
-3. รัน:
-
 ```powershell
 node scripts/import-bluehouse-seating.mjs path\to\bluehouse-export.json
-npm run build
 ```
 
-ผลลัพธ์: `src/data/guests.json` + `public/seating.json`
+ผลลัพธ์: `src/data/guests.json` + `public/seating.json` (รูปแบบ legacy — เว็บแขกแปลงให้อัตโนมัติ)
 
-## ผังบนเว็บ
+## ผังบนเว็บแขก
 
-- SVG 40 โต๊ะ [`hallLayout.ts`](../src/config/hallLayout.ts)
-- PNG จาก ERP: [`floorPlan.ts`](../src/config/floorPlan.ts)
+- ตำแหน่งโต๊ะจาก JSON (`tables[].posX/posY`)
+- กดโต๊ะ → ดูที่นั่งในโต๊ะ (read-only)
+- เส้นแดงจาก `layout.entrance` → โต๊ะที่เลือก
 
 ## ตัวอย่าง JSON
 
