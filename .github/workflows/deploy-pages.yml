@@ -38,6 +38,8 @@ jobs:
           VITE_MEDIA_API_BASE: ${{ secrets.VITE_MEDIA_API_BASE }}
         run: |
           npm run guests:build
+          node scripts/sync-seating-snapshot.mjs
+          node scripts/verify-seating-parity.mjs
           npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

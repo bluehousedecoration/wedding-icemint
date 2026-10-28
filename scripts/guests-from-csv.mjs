@@ -13,7 +13,7 @@ import path from 'node:path'
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 const csvPath = path.join(root, 'data', 'guests.csv')
 const srcOut = path.join(root, 'src', 'data', 'guests.json')
-const publicOut = path.join(root, 'public', 'seating.json')
+/** ไม่เขียน public/seating.json — ใช้ scripts/sync-seating-snapshot.mjs จาก ERP แทน */
 
 function parseCsv(text) {
   const lines = text.trim().split(/\r?\n/)
@@ -46,10 +46,7 @@ try {
   }
   const json = JSON.stringify(payload, null, 2) + '\n'
   writeFileSync(srcOut, json, 'utf8')
-  writeFileSync(publicOut, json, 'utf8')
-  console.log(`Wrote ${guests.length} guests →`)
-  console.log(`  ${srcOut}`)
-  console.log(`  ${publicOut}`)
+  console.log(`Wrote ${guests.length} guests → ${srcOut}`)
 } catch (e) {
   if (e.code === 'ENOENT') {
     console.log('ยังไม่มี data/guests.csv — export จาก Bluehouse/Sheets แล้วรัน npm run guests:build')
