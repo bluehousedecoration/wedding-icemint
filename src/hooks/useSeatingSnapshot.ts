@@ -21,7 +21,7 @@ export function useSeatingSnapshot(options: Options = {}) {
       updatedAt: bundled.updatedAt,
       source: 'bundled',
       layout: {
-        floorPlanImage: '/floor-plan-v3.png',
+        floorPlanImage: '/floor-plan-ava.png',
         entrance: { x: 78, y: 94 },
         aisleX: 50,
       },

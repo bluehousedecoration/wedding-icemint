@@ -64,8 +64,18 @@ function legacyToSnapshot(db: GuestDatabase): PublicSeatingSnapshot {
   }
 }
 
+function withGuestFloorImage(snapshot: PublicSeatingSnapshot): PublicSeatingSnapshot {
+  return {
+    ...snapshot,
+    layout: {
+      ...snapshot.layout,
+      floorPlanImage: FLOOR_PLAN_IMAGE,
+    },
+  }
+}
+
 export function normalizeSeatingPayload(json: unknown): PublicSeatingSnapshot | null {
-  if (isNewSnapshot(json)) return json
+  if (isNewSnapshot(json)) return withGuestFloorImage(json)
   if (typeof json === 'object' && json !== null && Array.isArray((json as GuestDatabase).guests)) {
     const db = json as GuestDatabase
     if (db.guests.length === 0) return null

@@ -9,11 +9,11 @@ export type FloorTablePosition = {
   is_vip: boolean
 }
 
-export const FLOOR_PLAN_ASPECT = 1024 / 802
-export const FLOOR_PLAN_REF_WIDTH = 1024
-export const FLOOR_PLAN_REF_HEIGHT = 802
+export const FLOOR_PLAN_ASPECT = 786 / 1217
+export const FLOOR_PLAN_REF_WIDTH = 786
+export const FLOOR_PLAN_REF_HEIGHT = 1217
 
-export const FLOOR_PLAN_IMAGE = '/floor-plan-v3.png'
+export const FLOOR_PLAN_IMAGE = '/floor-plan-ava.png'
 
 /** ทางเข้า-ออก (มุมล่างขวาบนผัง v3) */
 export const FLOOR_ENTRANCE = { x: 78, y: 94 }

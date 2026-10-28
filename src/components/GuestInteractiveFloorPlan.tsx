@@ -19,9 +19,6 @@ export function GuestInteractiveFloorPlan({
 }: GuestInteractiveFloorPlanProps) {
   const [detailTableNo, setDetailTableNo] = useState<number | null>(null)
 
-  const activeTableNo = detailTableNo ?? highlightTableNo
-  const activeTable = snapshot.tables.find((t) => t.tableNo === activeTableNo)
-
   const pathD = useMemo(() => {
     if (!showNavigation || !highlightTableNo || detailTableNo) return null
     const pos = snapshot.tables.find((t) => t.tableNo === highlightTableNo)
@@ -29,14 +26,17 @@ export function GuestInteractiveFloorPlan({
     return navigationPathD({ posX: pos.posX, posY: pos.posY }, snapshot.layout)
   }, [showNavigation, highlightTableNo, detailTableNo, snapshot])
 
-  if (detailTableNo && activeTable) {
-    return (
-      <GuestTableDetailView
-        table={activeTable}
-        assignments={assignmentsForTable(snapshot, detailTableNo)}
-        onBack={() => setDetailTableNo(null)}
-      />
-    )
+  if (detailTableNo) {
+    const table = snapshot.tables.find((t) => t.tableNo === detailTableNo)
+    if (table) {
+      return (
+        <GuestTableDetailView
+          table={table}
+          assignments={assignmentsForTable(snapshot, detailTableNo)}
+          onBack={() => setDetailTableNo(null)}
+        />
+      )
+    }
   }
 
   return (

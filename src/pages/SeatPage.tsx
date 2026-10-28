@@ -76,7 +76,7 @@ export function SeatPage() {
   const hasMap = data.tables.length > 0
 
   return (
-    <PageLayout title="โต๊ะของฉัน">
+    <PageLayout title="โต๊ะของฉัน" contentClassName="page page--seat">
       {!selected ? (
         <header className="hero compact">
           <p className="eyebrow">Find My Seat</p>

@@ -5,6 +5,7 @@ import { siteContent } from '../config/siteContent'
 
 type PageLayoutProps = {
   title?: string
+  contentClassName?: string
   children: ReactNode
 }
 
@@ -24,7 +25,7 @@ function SiteMapButton() {
   )
 }
 
-export function PageLayout({ title, children }: PageLayoutProps) {
+export function PageLayout({ title, contentClassName, children }: PageLayoutProps) {
   const menuLogo = siteContent.menuBarLogoUrl?.trim() ?? ''
 
   return (
@@ -52,7 +53,7 @@ export function PageLayout({ title, children }: PageLayoutProps) {
           <SiteMapButton />
         </div>
       </header>
-      <main className="page">{children}</main>
+      <main className={contentClassName ?? 'page'}>{children}</main>
       <BottomNav />
     </div>
   )

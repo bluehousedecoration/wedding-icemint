@@ -11,7 +11,7 @@ export type TableMarker = {
 
 export const floorPlanConfig = {
   /** ผัง v3 จาก Bluehouse ERP — ว่าง = ใช้ SVG fallback */
-  imageUrl: '/floor-plan-v3.png' as string,
+  imageUrl: '/floor-plan-ava.png' as string,
   imageAlt: 'ผังที่นั่งงานแต่ง Ice & Mint',
   /** จำนวนโต๊ะสำหรับ fallback grid */
   tableCount: 40,

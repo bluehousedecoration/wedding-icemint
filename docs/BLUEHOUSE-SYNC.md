@@ -19,10 +19,12 @@
 
 ## มาร์กโต๊ะ + เส้นทาง
 
-ทำใน ERP เท่านั้น:
+ทำใน **ERP** [`/wedding/seating`](https://erp.bluehousedecoration.com/wedding/seating) เท่านั้น:
 
-- **จัดตำแหน่งโต๊ะ** — ลากวงให้ตรงภาพ
-- **ตั้งค่าเส้นทางเว็บแขก** — จุดทางเข้า + แกน aisle
+- แท็บ **หน้าแขก** — preview ตรงกับเว็บ `/seat` (JSON จาก publish)
+- **จัดตำแหน่งโต๊ะ** + **ตั้งค่าเส้นทางเว็บแขก** → บันทึกแล้ว publish `guest-seating.json`
+
+รูปผัง AVA: `public/floor-plan-ava.png` (786×1217) · ERP: `/wedding/floor-plan-ava.png`
 
 ## โหมด export มือ (สำรอง)
 
