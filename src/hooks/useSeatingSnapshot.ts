@@ -1,12 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import guestDatabase from '../data/guests.json'
 import { fetchSeatingSnapshot } from '../lib/loadSeatingSnapshot'
-import { normalizeSeatingPayload } from '../lib/seatingSnapshot'
-import type { GuestDatabase } from '../types/guest'
 import type { PublicSeatingSnapshot } from '../types/seating'
 
-const bundled = guestDatabase as GuestDatabase
-const bundledFallback = normalizeSeatingPayload(bundled)
+/** ไม่ใช้ legacy FLOOR_TABLE_POSITIONS ตอน boot — รอ ERP / seating.json จริง */
+const INITIAL_SNAPSHOT: PublicSeatingSnapshot = {
+  updatedAt: '',
+  source: 'loading',
+  layout: {
+    floorPlanImage: '/floor-plan-ava.png',
+    entrance: { x: 85, y: 68.5 },
+    aisleX: 51,
+  },
+  tables: [],
+  assignments: [],
+  searchIndex: [],
+}
 
 const POLL_MS = 15_000
 
@@ -16,20 +24,7 @@ type Options = {
 
 export function useSeatingSnapshot(options: Options = {}) {
   const poll = options.poll ?? false
-  const [data, setData] = useState<PublicSeatingSnapshot>(
-    bundledFallback ?? {
-      updatedAt: bundled.updatedAt,
-      source: 'bundled',
-      layout: {
-        floorPlanImage: '/floor-plan-ava.png',
-        entrance: { x: 78, y: 94 },
-        aisleX: 50,
-      },
-      tables: [],
-      assignments: [],
-      searchIndex: [],
-    },
-  )
+  const [data, setData] = useState<PublicSeatingSnapshot>(INITIAL_SNAPSHOT)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const updatedRef = useRef(data.updatedAt)

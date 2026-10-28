@@ -23,8 +23,9 @@ export function getSeatingSourceUrls(): string[] {
     return remoteOnly
   }
 
+  /** Dev: ERP ก่อน (ตรง prod) — local เป็น fallback ตอน offline */
   if (import.meta.env.DEV && !preferLive) {
-    return [localUrl, ...remoteOnly]
+    return [...remoteOnly, localUrl]
   }
 
   urls.push(localUrl)

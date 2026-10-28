@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-10-28T11:19:35.899Z",
+  "updatedAt": "2026-10-28T12:01:16.237Z",
   "source": "bluehouse",
   "layout": {
     "floorPlanImage": "/wedding/floor-plan-ava.png",
     "entrance": {
       "x": 85,
-      "y": 68.5
+      "y": 71
     },
     "aisleX": 51
   },
@@ -13,320 +13,320 @@
     {
       "tableNo": 1,
       "tableName": "ญาติและครอบครัวเจ้าสาว(3)",
-      "posX": 26.88,
-      "posY": 16.7,
+      "posX": 19.56,
+      "posY": 12.29,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 2,
       "tableName": "ญาติและครอบครัวเจ้าสาว(2)",
-      "posX": 34.79,
-      "posY": 21.36,
+      "posX": 30.66,
+      "posY": 16.18,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 3,
       "tableName": "ญาติและครอบครัวเจ้าสาว(1)",
-      "posX": 44.6,
-      "posY": 25.11,
+      "posX": 43.19,
+      "posY": 19.18,
       "capacity": 10,
       "isVip": true
     },
     {
       "tableNo": 4,
       "tableName": "ญาติและครอบครัวเจ้าสาว(4)",
-      "posX": 44.6,
-      "posY": 37.46,
+      "posX": 43.19,
+      "posY": 28.17,
       "capacity": 10,
       "isVip": true
     },
     {
       "tableNo": 5,
       "tableName": "ญาติและครอบครัวเจ้าสาว(5)",
-      "posX": 38.74,
-      "posY": 31.77,
+      "posX": 35.02,
+      "posY": 24.08,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 6,
       "tableName": "ญาติและครอบครัวเจ้าสาว(6)",
-      "posX": 28.53,
-      "posY": 27.55,
+      "posX": 21.5,
+      "posY": 20.61,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 7,
       "tableName": "the one fitness(2)",
-      "posX": 33.03,
-      "posY": 37.2,
+      "posX": 27.57,
+      "posY": 28.12,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 8,
       "tableName": "จันทร์เกษรม",
-      "posX": 39.1,
-      "posY": 43.91,
+      "posX": 35.79,
+      "posY": 33.34,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 9,
       "tableName": "พระแม่(3)",
-      "posX": 44.28,
-      "posY": 50.61,
+      "posX": 43.13,
+      "posY": 38.31,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 10,
       "tableName": "พระแม่ (4)",
-      "posX": 44.5,
-      "posY": 63.04,
+      "posX": 43.08,
+      "posY": 47.82,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 11,
       "tableName": "พระแม่ (5)",
-      "posX": 38.65,
-      "posY": 56.83,
+      "posX": 35.2,
+      "posY": 43.27,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 12,
       "tableName": "ครูโรงเรียนพระแม่",
-      "posX": 33.1,
-      "posY": 50.31,
+      "posX": 27.7,
+      "posY": 38.24,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 13,
       "tableName": "the one fitness(1)",
-      "posX": 27.3,
-      "posY": 43.86,
+      "posX": 19.94,
+      "posY": 33.34,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 14,
       "tableName": "พระแม่ (6)",
-      "posX": 26.87,
-      "posY": 56.97,
+      "posX": 19.52,
+      "posY": 43.24,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 15,
       "tableName": "พนักงาน bluehouse (2)",
-      "posX": 33.33,
-      "posY": 63.66,
+      "posX": 27.22,
+      "posY": 48.39,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 16,
       "tableName": "พระแม่ (2)",
-      "posX": 38.13,
-      "posY": 70.25,
+      "posX": 35.12,
+      "posY": 53.2,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 17,
       "tableName": "พระแม่ (1)",
-      "posX": 43.68,
-      "posY": 76.95,
+      "posX": 42.44,
+      "posY": 58.47,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 18,
       "tableName": "พนักงาน Bluehouse (2)",
-      "posX": 32.65,
-      "posY": 76.45,
+      "posX": 26.89,
+      "posY": 58.2,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 19,
       "tableName": "พนักงาน Bluehouse (3)",
-      "posX": 27.1,
-      "posY": 69.94,
+      "posX": 19.57,
+      "posY": 53.12,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 20,
       "tableName": "ช่างภาพช่างแต่งหน้า",
-      "posX": 27.1,
-      "posY": 81.34,
+      "posX": 19.66,
+      "posY": 62,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 21,
       "tableName": "ญาติและครอบครัวเจ้าบ่าว(1)",
-      "posX": 56.8,
-      "posY": 25.89,
+      "posX": 59.11,
+      "posY": 19.32,
       "capacity": 10,
       "isVip": true
     },
     {
       "tableNo": 22,
       "tableName": "ชมรมอุสาหกรรมลาดหลุมแก้ว(1)",
-      "posX": 66.8,
-      "posY": 20.79,
+      "posX": 71.68,
+      "posY": 16.09,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 23,
       "tableName": "ชมรมอุสาหกรรมลาดหลุมแก้ว(2)",
-      "posX": 75.44,
-      "posY": 16.11,
+      "posX": 82.38,
+      "posY": 12.11,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 24,
       "tableName": "ชมรมอุสาหกรรมลาดหลุมแก้ว(3)",
-      "posX": 74.4,
-      "posY": 27.11,
+      "posX": 81.92,
+      "posY": 20.49,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 25,
       "tableName": "ญาติและครอบครัวเจ้าบ่าว(2)",
-      "posX": 63.92,
-      "posY": 31.79,
+      "posX": 68.72,
+      "posY": 23.94,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 26,
       "tableName": "ครอบครัว คุณสมภพ(1)",
-      "posX": 57.44,
-      "posY": 37,
+      "posX": 59.34,
+      "posY": 28.08,
       "capacity": 10,
       "isVip": true
     },
     {
       "tableNo": 27,
       "tableName": "พี่ป๊อก",
-      "posX": 57.36,
-      "posY": 50.47,
+      "posX": 59.67,
+      "posY": 38.4,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 28,
       "tableName": "ครอบครัวคุณสมภพ(2)",
-      "posX": 64.08,
-      "posY": 44.41,
+      "posX": 68.38,
+      "posY": 33.62,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 29,
       "tableName": "ชมรมอุสาหกรรมลาดหลุมแก้ว(4)",
-      "posX": 69.92,
-      "posY": 37.73,
+      "posX": 76.78,
+      "posY": 28.44,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 30,
       "tableName": "ชมรมอุสาหกรรมลาดหลุมแก้ว(5)",
-      "posX": 75.84,
-      "posY": 43.37,
+      "posX": 83.53,
+      "posY": 33.33,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 31,
       "tableName": "รองนายกหนู",
-      "posX": 71.04,
-      "posY": 50.9,
+      "posX": 77.08,
+      "posY": 38.46,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 32,
       "tableName": "โต๊ะพิเศษรวม",
-      "posX": 64.48,
-      "posY": 56.63,
+      "posX": 68.78,
+      "posY": 43.07,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 33,
       "tableName": "นักบิน rangsit (1)",
-      "posX": 57.6,
-      "posY": 62.47,
+      "posX": 59.91,
+      "posY": 47.79,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 34,
       "tableName": "เพื่อนเจ้าบ่าว",
-      "posX": 57.76,
-      "posY": 76.52,
+      "posX": 59.97,
+      "posY": 58.5,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 35,
       "tableName": "นักบิน rangsit (3)",
-      "posX": 64.08,
-      "posY": 69.63,
+      "posX": 68.69,
+      "posY": 53.04,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 36,
       "tableName": "นักบิน rangsit (2)",
-      "posX": 70.56,
-      "posY": 62.85,
+      "posX": 77.09,
+      "posY": 48.11,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 37,
       "tableName": "รวมเพื่อนป๊า",
-      "posX": 75.68,
-      "posY": 56.48,
+      "posX": 83.62,
+      "posY": 43.08,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 38,
       "tableName": "ชิปปิ้ง",
-      "posX": 75.52,
-      "posY": 68.95,
+      "posX": 83.67,
+      "posY": 52.99,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 39,
       "tableName": "pacen automation(2)",
-      "posX": 70.72,
-      "posY": 75.53,
+      "posX": 76.74,
+      "posY": 58.2,
       "capacity": 10,
       "isVip": false
     },
     {
       "tableNo": 40,
       "tableName": "pacen automation(1)",
-      "posX": 64.88,
-      "posY": 82.32,
+      "posX": 68.78,
+      "posY": 63.27,
       "capacity": 10,
       "isVip": false
     }
@@ -1564,96 +1564,6 @@
       "side": "joint",
       "category": "พนักงาน",
       "tableName": "พนักงาน Bluehouse (3)"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 1,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(1)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 2,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(2)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 3,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(3)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 4,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(4)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 5,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(5)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 6,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(6)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 7,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(7)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 8,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(8)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 9,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(9)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
-    },
-    {
-      "tableNo": 20,
-      "seatNo": 10,
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(10)",
-      "guestSource": "ช่างภาพช่างแต่งหน้า",
-      "side": "joint",
-      "category": "พนักงาน",
-      "tableName": "ช่างภาพช่างแต่งหน้า"
     },
     {
       "tableNo": 21,
@@ -3097,24 +3007,6 @@
     },
     {
       "tableNo": 38,
-      "seatNo": 1,
-      "displayName": "โอ (academy)(1)",
-      "guestSource": "pathum soccer",
-      "side": "joint",
-      "category": "เพื่อนร่วมงาน",
-      "tableName": "ชิปปิ้ง"
-    },
-    {
-      "tableNo": 38,
-      "seatNo": 2,
-      "displayName": "โอ (academy)(2)",
-      "guestSource": "pathum soccer",
-      "side": "joint",
-      "category": "เพื่อนร่วมงาน",
-      "tableName": "ชิปปิ้ง"
-    },
-    {
-      "tableNo": 38,
       "seatNo": 3,
       "displayName": "ชิปปิ้ง จีน(1)",
       "guestSource": "bluehouse",
@@ -3166,24 +3058,6 @@
       "side": "groom",
       "category": "เพื่อนร่วมงาน",
       "tableName": "ชิปปิ้ง"
-    },
-    {
-      "tableNo": 39,
-      "seatNo": 1,
-      "displayName": "ประแทม(1)",
-      "guestSource": "พาเคน",
-      "side": "groom",
-      "category": "พนักงาน",
-      "tableName": "pacen automation(2)"
-    },
-    {
-      "tableNo": 39,
-      "seatNo": 2,
-      "displayName": "ประแทม(2)",
-      "guestSource": "พาเคน",
-      "side": "groom",
-      "category": "พนักงาน",
-      "tableName": "pacen automation(2)"
     },
     {
       "tableNo": 39,
@@ -3268,24 +3142,6 @@
     },
     {
       "tableNo": 40,
-      "seatNo": 2,
-      "displayName": "กุ๊กไก่ มะแม(1)",
-      "guestSource": "พาเคน",
-      "side": "groom",
-      "category": "เพื่อนร่วมงาน",
-      "tableName": "pacen automation(1)"
-    },
-    {
-      "tableNo": 40,
-      "seatNo": 3,
-      "displayName": "กุ๊กไก่ มะแม(2)",
-      "guestSource": "พาเคน",
-      "side": "groom",
-      "category": "เพื่อนร่วมงาน",
-      "tableName": "pacen automation(1)"
-    },
-    {
-      "tableNo": 40,
       "seatNo": 4,
       "displayName": "นอร์ท(1)",
       "guestSource": "พาเคน",
@@ -3366,24 +3222,6 @@
       "guestSource": "the one",
       "zone": "ฝ่ายชาย",
       "category": "เพื่อน"
-    },
-    {
-      "displayName": "กุ๊กไก่ มะแม(1)",
-      "tableNo": 40,
-      "seatNo": 2,
-      "tableName": "pacen automation(1)",
-      "guestSource": "พาเคน",
-      "zone": "ฝ่ายชาย",
-      "category": "เพื่อนร่วมงาน"
-    },
-    {
-      "displayName": "กุ๊กไก่ มะแม(2)",
-      "tableNo": 40,
-      "seatNo": 3,
-      "tableName": "pacen automation(1)",
-      "guestSource": "พาเคน",
-      "zone": "ฝ่ายชาย",
-      "category": "เพื่อนร่วมงาน"
     },
     {
       "displayName": "กู๋แซ(1)",
@@ -4727,91 +4565,91 @@
       "category": "เพื่อนเจ้าสาว"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(1)",
-      "tableNo": 20,
-      "seatNo": 1,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(1)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(10)",
-      "tableNo": 20,
-      "seatNo": 10,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(10)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(2)",
-      "tableNo": 20,
-      "seatNo": 2,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(2)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(3)",
-      "tableNo": 20,
-      "seatNo": 3,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(3)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(4)",
-      "tableNo": 20,
-      "seatNo": 4,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(4)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(5)",
-      "tableNo": 20,
-      "seatNo": 5,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(5)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(6)",
-      "tableNo": 20,
-      "seatNo": 6,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(6)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(7)",
-      "tableNo": 20,
-      "seatNo": 7,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(7)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(8)",
-      "tableNo": 20,
-      "seatNo": 8,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(8)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
     },
     {
-      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า(9)",
-      "tableNo": 20,
-      "seatNo": 9,
-      "tableName": "ช่างภาพช่างแต่งหน้า",
+      "displayName": "โต๊ะช่างภาพและช่างแต่งหน้า (โต๊ะเสริม)(9)",
+      "tableNo": null,
+      "seatNo": null,
+      "tableName": null,
       "guestSource": "ช่างภาพช่างแต่งหน้า",
       "zone": "ร่วม",
       "category": "พนักงาน"
@@ -5130,24 +4968,6 @@
       "guestSource": "พระแม่สกล",
       "zone": "ร่วม",
       "category": "เพื่อนเจ้าสาว"
-    },
-    {
-      "displayName": "ประแทม(1)",
-      "tableNo": 39,
-      "seatNo": 1,
-      "tableName": "pacen automation(2)",
-      "guestSource": "พาเคน",
-      "zone": "ฝ่ายชาย",
-      "category": "พนักงาน"
-    },
-    {
-      "displayName": "ประแทม(2)",
-      "tableNo": 39,
-      "seatNo": 2,
-      "tableName": "pacen automation(2)",
-      "guestSource": "พาเคน",
-      "zone": "ฝ่ายชาย",
-      "category": "พนักงาน"
     },
     {
       "displayName": "ฝน(1)",
@@ -5510,24 +5330,6 @@
       "category": "ญาติ"
     },
     {
-      "displayName": "พี่ยาส (ลองชวน)(1)",
-      "tableNo": null,
-      "seatNo": null,
-      "tableName": null,
-      "guestSource": "นักบิน",
-      "zone": "ร่วม",
-      "category": "เพื่อน"
-    },
-    {
-      "displayName": "พี่ยาส (ลองชวน)(2)",
-      "tableNo": null,
-      "seatNo": null,
-      "tableName": null,
-      "guestSource": "นักบิน",
-      "zone": "ร่วม",
-      "category": "เพื่อน"
-    },
-    {
       "displayName": "พี่เล่ (ติดมันส์)(1)",
       "tableNo": 27,
       "seatNo": 8,
@@ -5652,24 +5454,6 @@
       "guestSource": "ญาติฝั่งแม่",
       "zone": "ฝ่ายชาย",
       "category": "ญาติ"
-    },
-    {
-      "displayName": "พี่โอ (ลองชวน)(1)",
-      "tableNo": null,
-      "seatNo": null,
-      "tableName": null,
-      "guestSource": "นักบิน",
-      "zone": "ร่วม",
-      "category": "เพื่อน"
-    },
-    {
-      "displayName": "พี่โอ (ลองชวน)(2)",
-      "tableNo": null,
-      "seatNo": null,
-      "tableName": null,
-      "guestSource": "นักบิน",
-      "zone": "ร่วม",
-      "category": "เพื่อน"
     },
     {
       "displayName": "พี่เแบงค์",
@@ -7128,24 +6912,6 @@
       "guestSource": "the one",
       "zone": "ฝ่ายชาย",
       "category": "เพื่อน"
-    },
-    {
-      "displayName": "โอ (academy)(1)",
-      "tableNo": 38,
-      "seatNo": 1,
-      "tableName": "ชิปปิ้ง",
-      "guestSource": "pathum soccer",
-      "zone": "ร่วม",
-      "category": "เพื่อนร่วมงาน"
-    },
-    {
-      "displayName": "โอ (academy)(2)",
-      "tableNo": 38,
-      "seatNo": 2,
-      "tableName": "ชิปปิ้ง",
-      "guestSource": "pathum soccer",
-      "zone": "ร่วม",
-      "category": "เพื่อนร่วมงาน"
     }
   ]
 }

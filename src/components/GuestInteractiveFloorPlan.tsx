@@ -26,6 +26,11 @@ export function GuestInteractiveFloorPlan({
     return navigationPathD({ posX: pos.posX, posY: pos.posY }, snapshot.layout)
   }, [showNavigation, highlightTableNo, detailTableNo, snapshot])
 
+  const highlightTable =
+    highlightTableNo != null
+      ? snapshot.tables.find((t) => t.tableNo === highlightTableNo)
+      : undefined
+
   if (detailTableNo) {
     const table = snapshot.tables.find((t) => t.tableNo === detailTableNo)
     if (table) {
@@ -72,9 +77,10 @@ export function GuestInteractiveFloorPlan({
           ))}
         </GuestFloorPlanCanvas>
       </div>
-      {highlightTableNo ? (
+      {highlightTable ? (
         <p className="floor-note">
-          โต๊ะของคุณ: <strong>Table {highlightTableNo}</strong>
+          โต๊ะของคุณ: <strong>Table {highlightTable.tableNo}</strong>
+          {highlightTable.tableName ? <> · {highlightTable.tableName}</> : null}
         </p>
       ) : null}
     </section>

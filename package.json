@@ -11,6 +11,7 @@
     "dev:sync": "npm run guests:build",
     "qr:export": "node scripts/export-qr-links.mjs",
     "seating:import": "node scripts/import-bluehouse-seating.mjs",
+    "seating:sync": "node scripts/sync-seating-snapshot.mjs",
     "lint": "oxlint",
     "preview": "vite preview --base /"
   },
