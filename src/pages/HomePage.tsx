@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { InvitationCardStack } from '../components/InvitationCardStack'
+import { HomeActionMenu } from '../components/HomeActionMenu'
 import { InvitationIntro } from '../components/InvitationIntro'
 import { InvitationVideoIntro } from '../components/InvitationVideoIntro'
 import { PageLayout } from '../components/PageLayout'
@@ -50,30 +50,7 @@ function HomeMainContent({
         <p className="venue">{siteContent.venue}</p>
       </header>
 
-      <nav className="actions" aria-label="เมนูหลัก">
-        <Link className="action primary" to="/video">
-          VDO Present
-        </Link>
-        <Link className="action" to="/photos">
-          รูปภาพ / Pre-Wedding
-        </Link>
-        <Link className="action" to="/seat">
-          โต๊ะของฉัน
-        </Link>
-        <Link className="action" to="/schedule">
-          กำหนดการ
-        </Link>
-        <Link className="action" to="/share">
-          แชร์ความประทับใจ
-        </Link>
-        {siteContent.venueMapUrl ? (
-          <a className="action" href={siteContent.venueMapUrl} target="_blank" rel="noreferrer">
-            แผนที่
-          </a>
-        ) : (
-          <span className="action disabled">แผนที่ — เร็ว ๆ นี้</span>
-        )}
-      </nav>
+      <HomeActionMenu />
 
       <section className="hint">
         <p>

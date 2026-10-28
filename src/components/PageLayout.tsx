@@ -25,12 +25,27 @@ function SiteMapButton() {
 }
 
 export function PageLayout({ title, children }: PageLayoutProps) {
+  const menuLogo = siteContent.menuBarLogoUrl?.trim() ?? ''
+
   return (
     <div className="layout">
       <header className="site-bar">
         <Link to="/" className="site-brand">
-          <span className="site-brand-title">{siteContent.couple}</span>
-          <span className="site-brand-date">{siteContent.headerDateLine}</span>
+          {menuLogo ? (
+            <img
+              className="site-brand-logo"
+              src={menuLogo}
+              alt={`${siteContent.couple} — ${siteContent.coupleFullNames}`}
+              width={320}
+              height={80}
+              decoding="async"
+            />
+          ) : (
+            <>
+              <span className="site-brand-title">{siteContent.couple}</span>
+              <span className="site-brand-date">{siteContent.headerDateLine}</span>
+            </>
+          )}
         </Link>
         <div className="site-bar-end">
           {title ? <span className="site-page-title">{title}</span> : null}

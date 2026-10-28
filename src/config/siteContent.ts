@@ -25,12 +25,65 @@ export type VideoSection = {
   mediaAlbumKey?: Extract<MediaAlbumKey, 'vdo-present' | 'vdo-wedding-day'>
 }
 
+export type HomeMenuItem = {
+  id: string
+  label: string
+  detail?: string
+  to?: string
+  /** ใช้ venueMapUrl จาก siteContent */
+  mapLink?: boolean
+  primary?: boolean
+}
+
 export const siteContent = {
   couple: 'Ice & Mint',
   coupleFullNames: 'Thanakrit & Arisara',
+  /** โลโก้แถบเมนูด้านบน (public/) */
+  menuBarLogoUrl: '/logo-menu-bar.png',
   /** แถบด้านบนทุกหน้า — ใต้ชื่อคู่ */
   headerDateLine: '20 December 2026',
   tagline: 'Our time. Our love. Our forever.',
+
+  /** ปุ่มเมนูหน้าแรก */
+  homeMenu: [
+    {
+      id: 'video',
+      label: 'VDO Present',
+      detail: 'สามารถดูได้ในวันจริง',
+      to: '/video',
+      primary: true,
+    },
+    {
+      id: 'photos',
+      label: 'รูปภาพ / Pre-Wedding',
+      detail: 'ดูรูปภาพ prewedding ของบ่าวสาว',
+      to: '/photos',
+    },
+    {
+      id: 'seat',
+      label: 'โต๊ะของฉัน',
+      detail: 'สามารถพิมพ์ชื่อของท่านในการ์ดเพื่อหาโต๊ะที่นั่ง',
+      to: '/seat',
+    },
+    {
+      id: 'schedule',
+      label: 'กำหนดการ',
+      detail: 'ดูกำหนดการของงาน',
+      to: '/schedule',
+    },
+    {
+      id: 'share',
+      label: 'แชร์รูปความประทับใจ',
+      detail: 'จากโทรศัพท์คุณให้บ่าวสาว',
+      to: '/share',
+    },
+    {
+      id: 'map',
+      label: 'แผนที่',
+      detail: 'กดเพื่อดูรายละเอียดจาก Google Map',
+      mapLink: true,
+    },
+  ] satisfies HomeMenuItem[],
   /** การ์ดเชิญ v2 — PDF ใน public (เรนเดอร์หน้า–หลังบนเว็บ) */
   invitationCardPdfUrl: '/wedding-card2.pdf',
   /** ลำดับหน้า wedding card2.pdf (เริ่มที่ 1): 1=ปก Ice&Mint · 2=Water Blessing ด้านหลัง */
@@ -52,17 +105,20 @@ export const siteContent = {
     '55/24 ตำบลบางพลับ อำเภอปากเกร็ด จังหวัดนนทบุรี 11120 (ถนนราชพฤกษ์)',
   venueMapUrl: 'https://maps.app.goo.gl/zde8YuzuXEmvgBCV6' as string,
 
+  /** ภาพหน้ากำหนดการ (public/) */
+  scheduleTopImageUrl: '/schedule-top.png',
+  scheduleBottomImageUrl: '/schedule-bottom.png',
+
   /** JSON ที่นั่ง live จาก Bluehouse — ว่าง = ใช้แค่ env / seating.json บน Pages */
   seatingLiveJsonUrl:
     'https://erp.bluehousedecoration.com/wedding/seating/guest-seating.json' as string,
 
-  dressCode: {
-    title: 'Dress Code',
-    subtitle: 'Smart casual / Semi-formal',
+  themeColors: {
+    title: 'Theme colors',
+    subtitle: '',
     items: [
-      'โทนสีที่เข้ากับงาน: น้ำเงินคราม · แชมเปญ · ครีม · greige',
       'หลีกเลี่ยงชุดสีขาวล้วน (สงวนให้เจ้าบ่าวเจ้าสาว)',
-      'รองเท้าสบาย ๆ — มีพิธีการและถ่ายภาพกลางแจ้ง',
+      'รองเท้าสบาย ๆ',
     ],
   },
 
@@ -156,6 +212,7 @@ export const siteContent = {
       detail:
         'โยนช่อดอกไม้ หรือดึงริบบิ้น · บ่าวสาวขอบคุณแขก · จบพิธีการ ถ่ายภาพร่วมกับแขก',
     },
+    { time: '21:00', title: 'after party' },
   ] satisfies ScheduleItem[],
 
   /** เฟส 2 — ลิงก์ Google Form / Drive (ว่าง = แสดง “เร็ว ๆ นี้”) */
