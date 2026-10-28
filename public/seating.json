@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-10-28T12:01:16.237Z",
+  "updatedAt": "2026-10-28T11:53:34.217Z",
   "source": "bluehouse",
   "layout": {
     "floorPlanImage": "/wedding/floor-plan-ava.png",
     "entrance": {
       "x": 85,
-      "y": 71
+      "y": 68.5
     },
     "aisleX": 51
   },

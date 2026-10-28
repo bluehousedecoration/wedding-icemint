@@ -3,6 +3,7 @@ import { navigationPathD } from '../lib/seatingNavigationPath'
 import { assignmentsForTable } from '../lib/seatingSnapshot'
 import type { PublicSeatingSnapshot } from '../types/seating'
 import { GuestFloorPlanCanvas } from './GuestFloorPlanCanvas'
+import { GuestFloorPlanZoom } from './GuestFloorPlanZoom'
 import { GuestTableDetailView } from './GuestTableDetailView'
 import { GuestTableMapMarker } from './GuestTableMapMarker'
 
@@ -55,27 +56,29 @@ export function GuestInteractiveFloorPlan({
         <p className="floor-nav-hint">เลือกชื่อจากช่องค้นหา — เส้นแดงจะชี้ไปโต๊ะของคุณ · แตะโต๊ะดูรายชื่อ</p>
       )}
       <div className="wedding-floor-wrap">
-        <GuestFloorPlanCanvas imagePath={snapshot.layout.floorPlanImage}>
-          {pathD ? (
-            <svg
-              className="guest-floor-nav-svg"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              aria-hidden
-            >
-              <path d={pathD} className="seat-nav-path seat-nav-path-glow" />
-              <path d={pathD} className="seat-nav-path" />
-            </svg>
-          ) : null}
-          {snapshot.tables.map((t) => (
-            <GuestTableMapMarker
-              key={t.tableNo}
-              table={t}
-              isActive={highlightTableNo === t.tableNo}
-              onClick={setDetailTableNo}
-            />
-          ))}
-        </GuestFloorPlanCanvas>
+        <GuestFloorPlanZoom>
+          <GuestFloorPlanCanvas imagePath={snapshot.layout.floorPlanImage}>
+            {pathD ? (
+              <svg
+                className="guest-floor-nav-svg"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                aria-hidden
+              >
+                <path d={pathD} className="seat-nav-path seat-nav-path-glow" />
+                <path d={pathD} className="seat-nav-path" />
+              </svg>
+            ) : null}
+            {snapshot.tables.map((t) => (
+              <GuestTableMapMarker
+                key={t.tableNo}
+                table={t}
+                isActive={highlightTableNo === t.tableNo}
+                onClick={setDetailTableNo}
+              />
+            ))}
+          </GuestFloorPlanCanvas>
+        </GuestFloorPlanZoom>
       </div>
       {highlightTable ? (
         <p className="floor-note">
