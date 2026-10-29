@@ -12,6 +12,8 @@
     "qr:export": "node scripts/export-qr-links.mjs",
     "seating:import": "node scripts/import-bluehouse-seating.mjs",
     "seating:sync": "node scripts/sync-seating-snapshot.mjs",
+    "media:deploy": "node scripts/deploy-media-api.mjs",
+    "media:verify": "node scripts/verify-media-api.mjs",
     "lint": "oxlint",
     "preview": "vite preview --base /"
   },

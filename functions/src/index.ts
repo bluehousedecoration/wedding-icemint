@@ -1,4 +1,3 @@
-import { defineSecret } from 'firebase-functions/params'
 import { onRequest } from 'firebase-functions/v2/https'
 import express from 'express'
 import { getAllowedOrigins } from './config'
@@ -93,12 +92,21 @@ function createApp(): express.Express {
     res.json({ ok: true })
   })
 
+  app.get('/', (_req, res) => {
+    res.json({
+      ok: true,
+      service: 'ice-mint-wedding mediaApi',
+      health: '/health',
+      endpoints: {
+        list: 'GET /media/list?album=&page=&pageSize=',
+        file: 'GET /media/file?id=',
+        share: 'POST /media/share',
+      },
+    })
+  })
+
   return app
 }
-
-const googleServiceAccountJson = defineSecret('GOOGLE_SERVICE_ACCOUNT_JSON')
-const driveAlbumsJson = defineSecret('DRIVE_ALBUMS_JSON')
-const allowedOrigins = defineSecret('ALLOWED_ORIGINS')
 
 const mediaApp = createApp()
 
@@ -108,7 +116,7 @@ export const mediaApi = onRequest(
     memory: '512MiB',
     timeoutSeconds: 120,
     cors: false,
-    secrets: [googleServiceAccountJson, driveAlbumsJson, allowedOrigins],
+    secrets: ['GOOGLE_SERVICE_ACCOUNT_JSON', 'DRIVE_ALBUMS_JSON', 'ALLOWED_ORIGINS'],
   },
   mediaApp,
 )

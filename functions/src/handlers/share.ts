@@ -14,10 +14,26 @@ function todayBangkok(): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Bangkok' }).format(new Date())
 }
 
+async function requestBodyBuffer(req: Request): Promise<Buffer> {
+  const raw = (req as Request & { rawBody?: Buffer }).rawBody
+  if (raw?.length) return raw
+  const chunks: Buffer[] = []
+  for await (const chunk of req) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk))
+  }
+  return Buffer.concat(chunks)
+}
+
 export async function handleShare(req: Request, res: Response): Promise<void> {
   const drive = getDrive()
   if (!drive) {
     res.status(503).json({ error: 'drive_not_configured' })
+    return
+  }
+
+  const body = await requestBodyBuffer(req)
+  if (!body.length) {
+    res.status(400).json({ error: 'empty_body' })
     return
   }
 
@@ -48,7 +64,8 @@ export async function handleShare(req: Request, res: Response): Promise<void> {
       })
     })
 
-    bb.on('error', () => {
+    bb.on('error', (err) => {
+      console.error('[share] busboy parse error:', err)
       res.status(400).json({ error: 'upload_parse_failed' })
       resolve()
     })
@@ -130,6 +147,6 @@ export async function handleShare(req: Request, res: Response): Promise<void> {
       resolve()
     })
 
-    req.pipe(bb)
+    bb.end(body)
   })
 }

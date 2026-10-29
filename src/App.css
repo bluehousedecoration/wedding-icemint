@@ -1062,6 +1062,7 @@ body.lightbox-open {
 .guest-floor-canvas-inner {
   position: relative;
   width: 100%;
+  min-width: 100%;
   container-type: inline-size;
   container-name: guest-floor;
 }
@@ -1076,10 +1077,19 @@ body.lightbox-open {
 }
 
 .page.page--seat {
+  width: 100%;
   max-width: none;
+  margin-left: 0;
+  margin-right: 0;
   padding-left: 0;
   padding-right: 0;
   padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+}
+
+.layout > main.page.page--seat {
+  flex: 1;
+  align-self: stretch;
+  box-sizing: border-box;
 }
 
 .page--seat .hero,
@@ -1096,10 +1106,10 @@ body.lightbox-open {
 }
 
 .page--seat .floor-plan {
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
   margin-bottom: 0;
 }
 
@@ -1114,6 +1124,8 @@ body.lightbox-open {
 }
 
 .page--seat .wedding-floor-wrap {
+  width: 100%;
+  max-width: none;
   border-radius: 0;
   border-left: none;
   border-right: none;
@@ -1193,11 +1205,42 @@ body.lightbox-open {
   position: relative;
   overflow: hidden;
   touch-action: none;
+  width: 100%;
   max-height: min(72dvh, 820px);
   min-height: 12rem;
   background: #f5f0e8;
   -webkit-user-select: none;
   user-select: none;
+}
+
+/* PC / แท็บเล็ตแนวนอน — ผังกว้างเต็มเหมือนมือถือ */
+@media (min-width: 768px) {
+  .page--seat .floor-plan {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .page--seat .wedding-floor-wrap,
+  .page--seat .guest-floor-zoom,
+  .page--seat .guest-floor-zoom-viewport,
+  .page--seat .guest-floor-zoom-layer,
+  .page--seat .guest-floor-canvas,
+  .page--seat .guest-floor-canvas-inner {
+    width: 100%;
+    max-width: none;
+  }
+
+  .guest-floor-zoom-viewport {
+    max-height: min(82dvh, 1100px);
+  }
+
+  .page--seat .floor-title,
+  .page--seat .floor-nav-hint,
+  .page--seat .floor-note {
+    max-width: 40rem;
+  }
 }
 
 .guest-floor-zoom-viewport--grab {
@@ -1209,6 +1252,7 @@ body.lightbox-open {
 }
 
 .guest-floor-zoom-layer {
+  width: 100%;
   transform-origin: 0 0;
   will-change: transform;
 }

@@ -67,28 +67,21 @@
 
 ## ขั้นที่ 5 — Firebase Functions (secrets + deploy)
 
+**แบบง่าย (แนะนำ):**
+
+1. ใส่ไฟล์ใน [`secrets/`](../secrets/) — ดู [`secrets/README.md`](../secrets/README.md)
+2. `copy functions\.env.example functions\.env` แล้วแก้ `FIREBASE_PROJECT_ID` + path ไฟล์
+3. `firebase login` (ครั้งแรก)
+4. จาก root โปรเจกต์:
+
 ```powershell
-cd "D:\003_wedding plan\functions"
-npm install
-npm run build
-
-firebase login
-firebase use YOUR_PROJECT_ID
-
-firebase functions:secrets:set GOOGLE_SERVICE_ACCOUNT_JSON
-# วาง JSON ทั้งก้อน (บรรทัดเดียว) แล้ว Enter
-
-firebase functions:secrets:set DRIVE_ALBUMS_JSON
-# วาง JSON แมปโฟลเดอร์
-
-firebase functions:secrets:set ALLOWED_ORIGINS
-# ตัวอย่าง: https://icemintwedding20dec26.com,http://127.0.0.1:5173
-
-firebase deploy --only functions:mediaApi
+cd "D:\003_wedding plan"
+npm run media:deploy
 ```
 
-คัดลอก URL ที่ได้ เช่น  
-`https://asia-southeast1-PROJECT.cloudfunctions.net/mediaApi`
+Script จะ build, ตั้ง secrets, deploy `mediaApi` แล้วพิมพ์ `VITE_MEDIA_API_BASE=...`
+
+**แบบมือ** (ถ้าไม่ใช้ script): ดู [DRIVE-MEDIA-API.md](./DRIVE-MEDIA-API.md)
 
 ---
 
