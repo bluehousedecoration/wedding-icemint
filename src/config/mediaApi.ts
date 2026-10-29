@@ -21,8 +21,15 @@ export type MediaListResponse = {
   items: MediaListItem[]
 }
 
+/** ค่า default สำหรับ GitHub Pages — override ได้ด้วย VITE_MEDIA_API_BASE */
+const PRODUCTION_MEDIA_API_BASE =
+  'https://asia-southeast1-ice-mint-wedding.cloudfunctions.net/mediaApi'
+
 export function getMediaApiBase(): string {
-  return import.meta.env.VITE_MEDIA_API_BASE?.trim().replace(/\/$/, '') ?? ''
+  const fromEnv = import.meta.env.VITE_MEDIA_API_BASE?.trim().replace(/\/$/, '')
+  if (fromEnv) return fromEnv
+  if (import.meta.env.PROD) return PRODUCTION_MEDIA_API_BASE
+  return ''
 }
 
 export function isMediaApiConfigured(): boolean {

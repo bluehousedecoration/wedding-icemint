@@ -38,7 +38,31 @@ if (ok) {
   )
   const data = await listRes.json()
   console.log(`  items: ${data.items?.length ?? 0}, hasMore: ${data.hasMore}`)
-  console.log('\nOK — เปิด /photos บนเว็บได้ (ถ้า VITE_MEDIA_API_BASE ใน build แล้ว)')
+
+  const png = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+    'base64',
+  )
+  const form = new FormData()
+  form.append('type', 'photo')
+  form.append('sourceLabel', 'verify-script')
+  form.append('file', new Blob([png], { type: 'image/png' }), 'verify.png')
+  const up = await fetch(`${base}/media/share`, {
+    method: 'POST',
+    body: form,
+    headers: { Origin: 'https://icemintwedding20dec26.com' },
+  })
+  console.log(`share upload test: ${up.status}`)
+  const upText = await up.text()
+  if (up.ok) {
+    console.log(`  ${upText.slice(0, 120)}`)
+    console.log('\nOK — API + Drive พร้อม · /share บนเว็บอัปโหลดได้')
+  } else {
+    console.log(`  ${upText.slice(0, 200)}`)
+    console.warn(
+      '\nWARN — list/health OK แต่อัปโหลดไม่ผ่าน: แชร์โฟลเดอร์ Drive ให้ ice-mint-media@ice-mint-wedding-513105.iam.gserviceaccount.com (Editor) — ดู docs/DRIVE-QUICKSTART.md',
+    )
+  }
 } else {
   process.exit(1)
 }

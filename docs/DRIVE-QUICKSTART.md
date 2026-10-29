@@ -8,7 +8,13 @@
 | `secrets/drive-albums.json` | คัดลอกจาก `secrets/drive-albums.example.json` ใส่ Folder ID |
 | `functions/.env` | คัดลอกจาก `functions/.env.example` |
 
-แชร์โฟลเดอร์ Drive ให้ email ใน SA (ดู [DRIVE-SETUP-TH.md](./DRIVE-SETUP-TH.md))
+แชร์โฟลเดอร์ Drive ให้ **Editor** กับ service account นี้ (ไม่งั้นอัปโหลด `/share` จะ error `upload_failed`):
+
+`ice-mint-media@ice-mint-wedding-513105.iam.gserviceaccount.com`
+
+โฟลเดอร์ทดสอบ/แชร์รูป (ID ใน `secrets/drive-albums.json`): `1p-F61PaXde6WWijrwgvhZ2pC4je_wtMy`
+
+รายละเอียด: [DRIVE-SETUP-TH.md](./DRIVE-SETUP-TH.md)
 
 ## 2. `functions/.env` ตัวอย่าง
 
@@ -39,7 +45,7 @@ npm run media:verify
 npm run dev
 ```
 
-Production: GitHub → Secrets → `VITE_MEDIA_API_BASE` → push `main`
+Production: push `main` แล้ว Pages build เอง (มี URL Media API ในโค้ดแล้ว) — ตั้ง GitHub Secret `VITE_MEDIA_API_BASE` ได้ถ้าต้องการเปลี่ยน URL
 
 ## 5. ปิดรูป demo
 

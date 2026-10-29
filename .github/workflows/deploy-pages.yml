@@ -35,7 +35,7 @@ jobs:
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
           VITE_SEATING_JSON_URL: ${{ secrets.VITE_SEATING_JSON_URL }}
-          VITE_MEDIA_API_BASE: ${{ secrets.VITE_MEDIA_API_BASE }}
+          VITE_MEDIA_API_BASE: ${{ secrets.VITE_MEDIA_API_BASE || 'https://asia-southeast1-ice-mint-wedding.cloudfunctions.net/mediaApi' }}
         run: |
           npm run guests:build
           node scripts/sync-seating-snapshot.mjs
