@@ -149,6 +149,12 @@ export const siteContent = {
       description: 'ภาพจากช่างภาพในวันงาน — แตะรูปเพื่อดูใหญ่และดาวน์โหลด',
       mediaAlbumKey: 'wedding-day',
     },
+    {
+      id: 'wedding-backdrop',
+      title: 'Wedding Backdrop ทางเข้า',
+      description: 'ภาพบริเวณ Backdrop ทางเข้างาน',
+      mediaAlbumKey: 'wedding-backdrop',
+    },
   ] satisfies PhotoAlbum[],
 
   photographer: {

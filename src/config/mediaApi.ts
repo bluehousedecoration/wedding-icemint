@@ -3,6 +3,7 @@ export type MediaAlbumKey =
   | 'vdo-wedding-day'
   | 'prewedding'
   | 'wedding-day'
+  | 'wedding-backdrop'
 
 export type MediaListItem = {
   id: string

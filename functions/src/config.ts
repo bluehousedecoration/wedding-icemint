@@ -3,6 +3,7 @@ export const LIST_ALBUM_KEYS = [
   'vdo-wedding-day',
   'prewedding',
   'wedding-day',
+  'wedding-backdrop',
 ] as const
 
 export const UPLOAD_ALBUM_KEYS = ['guest-photos', 'guest-videos'] as const
