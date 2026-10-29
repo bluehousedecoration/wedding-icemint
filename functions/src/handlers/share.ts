@@ -4,9 +4,9 @@ import { MAX_PHOTO_BYTES, MAX_VIDEO_BYTES } from '../config'
 import {
   findOrCreateSubfolder,
   folderIdForAlbum,
-  getDrive,
   slugSourceLabel,
 } from '../drive'
+import { getDriveForUpload } from '../driveOAuth'
 
 type ShareType = 'photo' | 'video'
 
@@ -24,10 +24,23 @@ async function requestBodyBuffer(req: Request): Promise<Buffer> {
   return Buffer.concat(chunks)
 }
 
+function driveUploadError(err: unknown): string {
+  const data = (err as { response?: { data?: { error?: { message?: string; errors?: { reason?: string }[] } } } })
+    ?.response?.data?.error
+  const msg = data?.message ?? (err instanceof Error ? err.message : '')
+  if (msg.includes('Service Accounts do not have storage quota') || msg.includes('storage quota')) {
+    return 'drive_sa_no_quota'
+  }
+  if (data?.errors?.some((e) => e.reason === 'insufficientFilePermissions')) {
+    return 'drive_forbidden'
+  }
+  return 'upload_failed'
+}
+
 export async function handleShare(req: Request, res: Response): Promise<void> {
-  const drive = getDrive()
+  const drive = getDriveForUpload()
   if (!drive) {
-    res.status(503).json({ error: 'drive_not_configured' })
+    res.status(503).json({ error: 'drive_upload_not_configured' })
     return
   }
 
@@ -141,8 +154,10 @@ export async function handleShare(req: Request, res: Response): Promise<void> {
           fileId: created.data.id,
           folderName,
         })
-      } catch {
-        res.status(500).json({ error: 'upload_failed' })
+      } catch (err) {
+        const code = driveUploadError(err)
+        console.error('[share] upload error:', err)
+        res.status(code === 'upload_failed' ? 500 : 503).json({ error: code })
       }
       resolve()
     })

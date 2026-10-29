@@ -59,9 +59,15 @@ if (ok) {
     console.log('\nOK — API + Drive พร้อม · /share บนเว็บอัปโหลดได้')
   } else {
     console.log(`  ${upText.slice(0, 200)}`)
-    console.warn(
-      '\nWARN — list/health OK แต่อัปโหลดไม่ผ่าน: แชร์โฟลเดอร์ Drive ให้ ice-mint-media@ice-mint-wedding-513105.iam.gserviceaccount.com (Editor) — ดู docs/DRIVE-QUICKSTART.md',
-    )
+    if (upText.includes('drive_upload_not_configured') || upText.includes('drive_sa_no_quota')) {
+      console.warn(
+        '\nWARN — ต้องตั้ง OAuth อัปโหลด: npm run drive:oauth แล้ว npm run media:deploy (ดู docs/DRIVE-QUICKSTART.md §3)',
+      )
+    } else {
+      console.warn(
+        '\nWARN — list/health OK แต่อัปโหลดไม่ผ่าน: ตรวจ OAuth + สิทธิโฟลเดอร์ Drive',
+      )
+    }
   }
 } else {
   process.exit(1)

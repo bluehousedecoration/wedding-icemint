@@ -116,7 +116,12 @@ export const mediaApi = onRequest(
     memory: '512MiB',
     timeoutSeconds: 120,
     cors: false,
-    secrets: ['GOOGLE_SERVICE_ACCOUNT_JSON', 'DRIVE_ALBUMS_JSON', 'ALLOWED_ORIGINS'],
+    secrets: [
+      'GOOGLE_SERVICE_ACCOUNT_JSON',
+      'DRIVE_ALBUMS_JSON',
+      'ALLOWED_ORIGINS',
+      'GOOGLE_DRIVE_OAUTH_JSON',
+    ],
   },
   mediaApp,
 )

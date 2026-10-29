@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { uploadConfig } from '../config/uploadConfig'
 import { uploadGuestPhoto, type UploadProgress } from '../lib/guestUpload'
+import { uploadErrorMessage } from '../lib/uploadErrorMessage'
 import { isMediaApiConfigured } from '../config/mediaApi'
 
 type GuestPhotoUploadProps = {
@@ -46,7 +47,8 @@ export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
       setProgress({
         percent: 0,
         state: 'error',
-        error: e instanceof Error ? e.message : 'อัปโหลดไม่สำเร็จ',
+        error:
+          e instanceof Error ? uploadErrorMessage(e.message) : uploadErrorMessage('upload_failed'),
       })
     }
   }

@@ -14,6 +14,7 @@
     "seating:sync": "node scripts/sync-seating-snapshot.mjs",
     "media:deploy": "node scripts/deploy-media-api.mjs",
     "media:verify": "node scripts/verify-media-api.mjs",
+    "drive:oauth": "node scripts/drive-oauth-setup.mjs",
     "lint": "oxlint",
     "preview": "vite preview --base /"
   },

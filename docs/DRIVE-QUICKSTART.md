@@ -24,7 +24,16 @@ GOOGLE_SERVICE_ACCOUNT_JSON_FILE=../secrets/google-service-account.json
 DRIVE_ALBUMS_JSON_FILE=../secrets/drive-albums.json
 ```
 
-## 3. Deploy API
+## 3. OAuth สำหรับอัปโหลดแขก (จำเป็น)
+
+Service Account **อ่านรูปใน Drive ได้** แต่ **อัปโหลดไฟล์ลง My Drive ไม่ได้** — ต้องใช้บัญชี Google เจ้าของโฟลเดอร์:
+
+1. GCP → Credentials → OAuth client (Web) → redirect `http://127.0.0.1:5555/oauth2callback`
+2. บันทึก `secrets/google-oauth-client.json` (ดู `google-oauth-client.example.json`)
+3. `npm run drive:oauth` → ล็อกอินบัญชีที่เป็นเจ้าของ Drive
+4. ได้ไฟล์ `secrets/google-drive-oauth.json`
+
+## 4. Deploy API
 
 ```powershell
 cd "D:\003_wedding plan"
@@ -32,7 +41,7 @@ npx firebase-tools login
 npm run media:deploy
 ```
 
-## 4. ฝั่งเว็บ — root `.env`
+## 5. ฝั่งเว็บ — root `.env`
 
 วางบรรทัดที่ script พิมพ์หลัง deploy:
 
@@ -47,7 +56,7 @@ npm run dev
 
 Production: push `main` แล้ว Pages build เอง (มี URL Media API ในโค้ดแล้ว) — ตั้ง GitHub Secret `VITE_MEDIA_API_BASE` ได้ถ้าต้องการเปลี่ยน URL
 
-## 5. ปิดรูป demo
+## 6. ปิดรูป demo
 
 เมื่อ list API ได้ไฟล์จริง ตั้งใน `siteContent.ts`:
 

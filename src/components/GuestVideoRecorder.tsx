@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useVideoRecorder } from '../hooks/useVideoRecorder'
 import { isMediaApiConfigured } from '../config/mediaApi'
+import { uploadErrorMessage } from '../lib/uploadErrorMessage'
 import { uploadGuestVideo, type UploadProgress } from '../lib/guestUpload'
 
 type GuestVideoRecorderProps = {
@@ -49,7 +50,8 @@ export function GuestVideoRecorder({ disabled }: GuestVideoRecorderProps) {
       setProgress({
         percent: 0,
         state: 'error',
-        error: e instanceof Error ? e.message : 'อัปโหลดไม่สำเร็จ',
+        error:
+          e instanceof Error ? uploadErrorMessage(e.message) : uploadErrorMessage('upload_failed'),
       })
     }
   }

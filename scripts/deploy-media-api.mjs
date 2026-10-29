@@ -97,12 +97,28 @@ const allowedOrigins =
   'https://icemintwedding20dec26.com,https://www.icemintwedding20dec26.com,http://127.0.0.1:5173,http://localhost:5173'
 
 mkdirSync(tmpDir, { recursive: true })
+let oauthJson = '{"client_id":"","client_secret":"","refresh_token":""}'
+try {
+  oauthJson = resolveSecretJson(
+    env,
+    'GOOGLE_DRIVE_OAUTH_JSON',
+    'GOOGLE_DRIVE_OAUTH_JSON_FILE',
+    'Drive OAuth',
+  )
+} catch {
+  console.warn(
+    '\nWARN: ยังไม่มี google-drive-oauth.json — อัปโหลด /share จะไม่ทำงานจนกว่ารัน npm run drive:oauth\n',
+  )
+}
+
 const saPath = path.join(tmpDir, 'sa.json')
 const albumsPath = path.join(tmpDir, 'albums.json')
 const originsPath = path.join(tmpDir, 'origins.txt')
+const oauthPath = path.join(tmpDir, 'oauth.json')
 writeFileSync(saPath, saJson, 'utf8')
 writeFileSync(albumsPath, albumsJson, 'utf8')
 writeFileSync(originsPath, allowedOrigins, 'utf8')
+writeFileSync(oauthPath, oauthJson, 'utf8')
 
 writeFileSync(
   path.join(root, '.firebaserc'),
@@ -127,6 +143,7 @@ try {
   run(`${fb} functions:secrets:set GOOGLE_SERVICE_ACCOUNT_JSON --data-file "${saPath}" --force`)
   run(`${fb} functions:secrets:set DRIVE_ALBUMS_JSON --data-file "${albumsPath}" --force`)
   run(`${fb} functions:secrets:set ALLOWED_ORIGINS --data-file "${originsPath}" --force`)
+  run(`${fb} functions:secrets:set GOOGLE_DRIVE_OAUTH_JSON --data-file "${oauthPath}" --force`)
   run(`${fb} deploy --only functions:mediaApi`)
 
   const mediaBase = `https://asia-southeast1-${projectId}.cloudfunctions.net/mediaApi`
