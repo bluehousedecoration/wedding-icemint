@@ -2,11 +2,16 @@ import { onRequest } from 'firebase-functions/v2/https'
 import express from 'express'
 import { getAllowedOrigins } from './config'
 import { handleFile } from './handlers/file'
+import { handleGuestLibrary, handleMine } from './handlers/guestLibrary'
 import { handleList } from './handlers/list'
 import { handleShare } from './handlers/share'
+import { handleTeamPage } from './handlers/teamPage'
+import { handleTeamUpload } from './handlers/teamUpload'
+import { isMediaBucketConfigured, MEDIA_BUCKET } from './gcsMedia'
 
 const uploadCounts = new Map<string, { count: number; reset: number }>()
 const UPLOAD_LIMIT = 30
+const TEAM_UPLOAD_LIMIT = 400
 const UPLOAD_WINDOW_MS = 60 * 60 * 1000
 
 function clientIp(req: express.Request): string {
@@ -15,15 +20,19 @@ function clientIp(req: express.Request): string {
   return req.ip ?? 'unknown'
 }
 
-function rateLimitUpload(req: express.Request, res: express.Response): boolean {
-  const ip = clientIp(req)
+function rateLimitUpload(
+  req: express.Request,
+  res: express.Response,
+  limit = UPLOAD_LIMIT,
+): boolean {
+  const ip = `${limit}:${clientIp(req)}`
   const now = Date.now()
   const entry = uploadCounts.get(ip)
   if (!entry || now > entry.reset) {
     uploadCounts.set(ip, { count: 1, reset: now + UPLOAD_WINDOW_MS })
     return true
   }
-  if (entry.count >= UPLOAD_LIMIT) {
+  if (entry.count >= limit) {
     res.status(429).json({ error: 'rate_limited' })
     return false
   }
@@ -79,6 +88,24 @@ function createApp(): express.Express {
     }
   })
 
+  app.get('/media/guest', async (req, res) => {
+    if (!rateLimitUpload(req, res, 200)) return
+    try {
+      await handleGuestLibrary(req, res)
+    } catch {
+      if (!res.headersSent) res.status(500).json({ error: 'list_failed' })
+    }
+  })
+
+  app.get('/media/mine', async (req, res) => {
+    if (!rateLimitUpload(req, res, 60)) return
+    try {
+      await handleMine(req, res)
+    } catch {
+      if (!res.headersSent) res.status(500).json({ error: 'list_failed' })
+    }
+  })
+
   app.post('/media/share', async (req, res) => {
     if (!rateLimitUpload(req, res)) return
     try {
@@ -88,8 +115,25 @@ function createApp(): express.Express {
     }
   })
 
+  app.post('/media/team', async (req, res) => {
+    if (!rateLimitUpload(req, res, TEAM_UPLOAD_LIMIT)) return
+    try {
+      await handleTeamUpload(req, res)
+    } catch {
+      if (!res.headersSent) res.status(500).json({ error: 'upload_failed' })
+    }
+  })
+
+  app.get('/go/:album', (req, res) => {
+    handleTeamPage(req, res)
+  })
+
   app.get('/health', (_req, res) => {
-    res.json({ ok: true })
+    res.json({
+      ok: true,
+      shareUploadReady: isMediaBucketConfigured(),
+      bucket: MEDIA_BUCKET,
+    })
   })
 
   app.get('/', (_req, res) => {

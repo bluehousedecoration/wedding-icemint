@@ -6,9 +6,10 @@ import { isMediaApiConfigured } from '../config/mediaApi'
 
 type GuestPhotoUploadProps = {
   disabled?: boolean
+  onUploaded?: () => void
 }
 
-export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
+export function GuestPhotoUpload({ disabled, onUploaded }: GuestPhotoUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [name, setName] = useState('')
   const [sourceLabel, setSourceLabel] = useState('')
@@ -41,6 +42,7 @@ export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
     try {
       await uploadGuestPhoto(file, name, sourceLabel, setProgress)
       setDone(true)
+      onUploaded?.()
       onPick(null)
       if (inputRef.current) inputRef.current.value = ''
     } catch (e) {
@@ -102,7 +104,7 @@ export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
       </button>
 
       <p className="hint">
-        สูงสุด {uploadConfig.maxPhotoBytes / 1024 / 1024} MB ต่อรูป — ส่งตรงถึงบ่าวสาว (ไม่เปิด Drive)
+        สูงสุด {uploadConfig.maxPhotoBytes / 1024 / 1024} MB ต่อรูป — ส่งเข้าอัลบั้มโมเมนต์ของบ่าวสาว
       </p>
 
       {preview ? (
@@ -119,7 +121,9 @@ export function GuestPhotoUpload({ disabled }: GuestPhotoUploadProps) {
         <p className="upload-status">กำลังอัปโหลด… {progress.percent}%</p>
       ) : null}
       {progress?.state === 'error' ? (
-        <p className="status error">{progress.error}</p>
+        <p className="status error">
+          {uploadErrorMessage(progress.error ?? 'upload_failed')}
+        </p>
       ) : null}
       {done ? (
         <p className="upload-success" role="status">

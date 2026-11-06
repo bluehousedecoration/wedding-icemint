@@ -57,6 +57,27 @@ function IconPhotos() {
   )
 }
 
+function IconEntrance() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M6 20V9.5a6 6 0 0 1 12 0V20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 20v-5.5a2 2 0 0 1 4 0V20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
 function IconCalendar() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -91,6 +112,20 @@ function IconSeat() {
   )
 }
 
+function IconBlessing() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M12 19s-6.5-4.1-6.5-8.2A3.4 3.4 0 0 1 12 8.2a3.4 3.4 0 0 1 6.5 2.6C18.5 14.9 12 19 12 19Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 function IconShare() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -110,9 +145,11 @@ const items: NavItem[] = [
   { to: '/', label: 'หน้าแรก', end: true, icon: <IconHome /> },
   { to: '/video', label: 'VDO', icon: <IconPlay /> },
   { to: '/photos', label: 'รูปภาพ', icon: <IconPhotos /> },
+  { to: '/backdrop', label: 'ทางเข้า', icon: <IconEntrance /> },
   { to: '/schedule', label: 'กำหนดการ', icon: <IconCalendar /> },
   { to: '/seat', label: 'โต๊ะ', icon: <IconSeat /> },
   { to: '/share', label: 'แชร์', icon: <IconShare /> },
+  { to: '/blessing', label: 'อวยพร', icon: <IconBlessing /> },
 ]
 
 export function BottomNav() {

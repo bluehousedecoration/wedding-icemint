@@ -68,7 +68,7 @@ export async function uploadGuestPhoto(
   const label = sourceLabel.trim()
   if (isMediaApiConfigured()) {
     if (!label) throw new Error('กรุณาระบุชื่อกล้อง / แหล่งที่มา')
-    await uploadGuestShare('photo', label, file, file.name, (percent) =>
+    await uploadGuestShare('photo', label, guestName, file, file.name, (percent) =>
       onProgress({ percent, state: 'running' }),
     )
     onProgress({ percent: 100, state: 'success' })
@@ -96,7 +96,7 @@ export async function uploadGuestVideo(
     if (!label) throw new Error('กรุณาระบุชื่อกล้อง / แหล่งที่มา')
     const ext = blob.type.includes('mp4') ? 'mp4' : 'webm'
     const fileName = `blessing-${Date.now()}.${ext}`
-    await uploadGuestShare('video', label, blob, fileName, (percent) =>
+    await uploadGuestShare('video', label, guestName, blob, fileName, (percent) =>
       onProgress({ percent, state: 'running' }),
     )
     onProgress({ percent: 100, state: 'success' })

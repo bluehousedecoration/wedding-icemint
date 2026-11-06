@@ -1,17 +1,19 @@
 import Busboy from 'busboy'
 import type { Request, Response } from 'express'
 import { MAX_PHOTO_BYTES, MAX_VIDEO_BYTES } from '../config'
-import {
-  findOrCreateSubfolder,
-  folderIdForAlbum,
-  slugSourceLabel,
-} from '../drive'
-import { getDriveForUpload } from '../driveOAuth'
+import { slugSourceLabel } from '../drive'
+import { albumPrefix, getMediaBucket } from '../gcsMedia'
 
 type ShareType = 'photo' | 'video'
 
 function todayBangkok(): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Bangkok' }).format(new Date())
+}
+
+function safeFileName(name: string): string {
+  const base = name.split(/[/\\]/).pop() ?? 'upload'
+  const cleaned = base.replace(/[^\w.\-]+/g, '_').slice(0, 80)
+  return cleaned || 'upload'
 }
 
 async function requestBodyBuffer(req: Request): Promise<Buffer> {
@@ -24,23 +26,10 @@ async function requestBodyBuffer(req: Request): Promise<Buffer> {
   return Buffer.concat(chunks)
 }
 
-function driveUploadError(err: unknown): string {
-  const data = (err as { response?: { data?: { error?: { message?: string; errors?: { reason?: string }[] } } } })
-    ?.response?.data?.error
-  const msg = data?.message ?? (err instanceof Error ? err.message : '')
-  if (msg.includes('Service Accounts do not have storage quota') || msg.includes('storage quota')) {
-    return 'drive_sa_no_quota'
-  }
-  if (data?.errors?.some((e) => e.reason === 'insufficientFilePermissions')) {
-    return 'drive_forbidden'
-  }
-  return 'upload_failed'
-}
-
 export async function handleShare(req: Request, res: Response): Promise<void> {
-  const drive = getDriveForUpload()
-  if (!drive) {
-    res.status(503).json({ error: 'drive_upload_not_configured' })
+  const bucket = getMediaBucket()
+  if (!bucket) {
+    res.status(503).json({ error: 'storage_not_configured' })
     return
   }
 
@@ -54,6 +43,8 @@ export async function handleShare(req: Request, res: Response): Promise<void> {
     const bb = Busboy({ headers: req.headers, limits: { fileSize: MAX_VIDEO_BYTES + 1024 } })
     let type: ShareType | null = null
     let sourceLabel = ''
+    let guestKey = ''
+    let guestName = ''
     let fileBuffer: Buffer | null = null
     let fileMime = 'application/octet-stream'
     let fileName = 'upload.bin'
@@ -62,6 +53,8 @@ export async function handleShare(req: Request, res: Response): Promise<void> {
     bb.on('field', (name, val) => {
       if (name === 'type') type = val === 'video' ? 'video' : val === 'photo' ? 'photo' : null
       if (name === 'sourceLabel') sourceLabel = String(val)
+      if (name === 'guestKey') guestKey = String(val).trim().toLowerCase()
+      if (name === 'guestName') guestName = String(val).trim().slice(0, 80)
     })
 
     bb.on('file', (_name, stream, info) => {
@@ -123,41 +116,34 @@ export async function handleShare(req: Request, res: Response): Promise<void> {
         }
 
         const albumKey = type === 'photo' ? 'guest-photos' : 'guest-videos'
-        const parentId = folderIdForAlbum(albumKey)
-        if (!parentId) {
-          res.status(503).json({ error: 'album_not_configured' })
-          resolve()
-          return
-        }
-
         const folderName = `${slugSourceLabel(label)}-${todayBangkok()}`
-        const targetFolderId = await findOrCreateSubfolder(drive, parentId, folderName)
+        const device =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(guestKey)
+            ? `d/${guestKey}/`
+            : ''
+        const objectName = `${albumPrefix(albumKey)}${device}${folderName}/${Date.now()}-${safeFileName(fileName)}`
 
-        const { Readable } = await import('node:stream')
-        const bodyStream = Readable.from(fileBuffer)
-
-        const created = await drive.files.create({
-          requestBody: {
-            name: fileName,
-            parents: [targetFolderId],
+        await bucket.file(objectName).save(fileBuffer, {
+          contentType: fileMime,
+          resumable: false,
+          metadata: {
+            cacheControl: 'private, max-age=3600',
+            metadata: {
+              guestKey: device ? guestKey : '',
+              guestName,
+              sourceLabel: label.slice(0, 120),
+            },
           },
-          media: {
-            mimeType: fileMime,
-            body: bodyStream,
-          },
-          fields: 'id, name',
-          supportsAllDrives: true,
         })
 
         res.json({
           ok: true,
-          fileId: created.data.id,
+          fileId: objectName,
           folderName,
         })
       } catch (err) {
-        const code = driveUploadError(err)
         console.error('[share] upload error:', err)
-        res.status(code === 'upload_failed' ? 500 : 503).json({ error: code })
+        res.status(500).json({ error: 'upload_failed' })
       }
       resolve()
     })

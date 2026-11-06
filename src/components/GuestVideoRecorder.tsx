@@ -6,9 +6,10 @@ import { uploadGuestVideo, type UploadProgress } from '../lib/guestUpload'
 
 type GuestVideoRecorderProps = {
   disabled?: boolean
+  onUploaded?: () => void
 }
 
-export function GuestVideoRecorder({ disabled }: GuestVideoRecorderProps) {
+export function GuestVideoRecorder({ disabled, onUploaded }: GuestVideoRecorderProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [name, setName] = useState('')
   const [sourceLabel, setSourceLabel] = useState('')
@@ -44,6 +45,7 @@ export function GuestVideoRecorder({ disabled }: GuestVideoRecorderProps) {
     try {
       await uploadGuestVideo(rec.recordedBlob, name, sourceLabel, setProgress)
       setDone(true)
+      onUploaded?.()
       rec.clearRecorded()
       rec.stopCamera()
     } catch (e) {
@@ -174,7 +176,9 @@ export function GuestVideoRecorder({ disabled }: GuestVideoRecorderProps) {
         <p className="upload-status">กำลังอัปโหลด… {progress.percent}%</p>
       ) : null}
       {progress?.state === 'error' ? (
-        <p className="status error">{progress.error}</p>
+        <p className="status error">
+          {uploadErrorMessage(progress.error ?? 'upload_failed')}
+        </p>
       ) : null}
       {done ? (
         <p className="upload-success" role="status">

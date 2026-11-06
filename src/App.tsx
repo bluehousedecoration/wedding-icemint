@@ -1,10 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { guestQueryParam } from './lib/guestCode'
+import { BackdropPage } from './pages/BackdropPage'
+import { BlessingPage } from './pages/BlessingPage'
 import { HomePage } from './pages/HomePage'
 import { PhotosPage } from './pages/PhotosPage'
-import { PhotographerUploadPage } from './pages/PhotographerUploadPage'
 import { SchedulePage } from './pages/SchedulePage'
 import { SeatPage } from './pages/SeatPage'
+import { SettingsPage } from './pages/SettingsPage'
 import { SharePage } from './pages/SharePage'
 import { VideoPage } from './pages/VideoPage'
 import './App.css'
@@ -26,10 +28,13 @@ function AppRoutes() {
       <Route path="/" element={isRootWithGuest ? <QrRedirect /> : <HomePage />} />
       <Route path="/video" element={<VideoPage />} />
       <Route path="/photos" element={<PhotosPage />} />
+      <Route path="/backdrop" element={<BackdropPage />} />
       <Route path="/schedule" element={<SchedulePage />} />
       <Route path="/seat" element={<SeatPage />} />
       <Route path="/share" element={<SharePage />} />
-      <Route path="/team/upload" element={<PhotographerUploadPage />} />
+      <Route path="/blessing" element={<BlessingPage />} />
+      <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/team/upload" element={<SettingsPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )

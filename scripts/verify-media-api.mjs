@@ -28,7 +28,13 @@ async function check(url, label) {
 }
 
 let ok = true
-ok &&= await check(`${base}/health`, 'health')
+const healthOk = await check(`${base}/health`, 'health')
+ok &&= healthOk
+if (healthOk) {
+  const healthRes = await fetch(`${base}/health`, { cache: 'no-store' })
+  const health = await healthRes.json()
+  console.log(`  shareUploadReady: ${health.shareUploadReady === true}`)
+}
 ok &&= await check(`${base}/media/list?album=${encodeURIComponent(album)}&page=1&pageSize=5`, 'list')
 
 if (ok) {
@@ -56,12 +62,12 @@ if (ok) {
   const upText = await up.text()
   if (up.ok) {
     console.log(`  ${upText.slice(0, 120)}`)
-    console.log('\nOK — API + Drive พร้อม · /share บนเว็บอัปโหลดได้')
+    console.log('\nOK — API + ถัง ice-mint-wedding-media พร้อม · /share อัปโหลดได้')
   } else {
     console.log(`  ${upText.slice(0, 200)}`)
-    if (upText.includes('drive_upload_not_configured') || upText.includes('drive_sa_no_quota')) {
+    if (upText.includes('storage_not_configured')) {
       console.warn(
-        '\nWARN — ต้องตั้ง OAuth อัปโหลด: npm run drive:oauth แล้ว npm run media:deploy (ดู docs/DRIVE-QUICKSTART.md §3)',
+        '\nWARN — API ยังไม่เห็นถัง ice-mint-wedding-media: ตรวจ secret ของ service account แล้ว deploy ใหม่',
       )
     } else {
       console.warn(

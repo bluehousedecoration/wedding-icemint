@@ -60,6 +60,12 @@ export const siteContent = {
       to: '/photos',
     },
     {
+      id: 'backdrop',
+      label: 'Backdrop ทางเข้า',
+      detail: 'ภาพบริเวณ Backdrop ทางเข้างาน',
+      to: '/backdrop',
+    },
+    {
       id: 'seat',
       label: 'โต๊ะของฉัน',
       detail: 'สามารถพิมพ์ชื่อของท่านในการ์ดเพื่อหาโต๊ะที่นั่ง',
@@ -74,8 +80,14 @@ export const siteContent = {
     {
       id: 'share',
       label: 'แชร์รูปความประทับใจ',
-      detail: 'จากโทรศัพท์คุณให้บ่าวสาว',
+      detail: 'ส่งรูปจากโทรศัพท์ให้บ่าวสาว',
       to: '/share',
+    },
+    {
+      id: 'blessing',
+      label: 'อวยพรบ่าวสาว',
+      detail: 'อัดคลิปอวยพรส่งถึงบ่าวสาว',
+      to: '/blessing',
     },
     {
       id: 'map',
@@ -149,23 +161,57 @@ export const siteContent = {
       description: 'ภาพจากช่างภาพในวันงาน — แตะรูปเพื่อดูใหญ่และดาวน์โหลด',
       mediaAlbumKey: 'wedding-day',
     },
-    {
-      id: 'wedding-backdrop',
-      title: 'Wedding Backdrop ทางเข้า',
-      description: 'ภาพบริเวณ Backdrop ทางเข้างาน',
-      mediaAlbumKey: 'wedding-backdrop',
-    },
   ] satisfies PhotoAlbum[],
 
+  /** ภาพ Backdrop ทางเข้า — เมนูแยกจากหน้ารูปภาพ */
+  backdropAlbum: {
+    id: 'wedding-backdrop',
+    title: 'Backdrop ทางเข้า',
+    description: 'ภาพบริเวณ Backdrop ทางเข้างาน — แตะรูปเพื่อดูใหญ่และบันทึกได้',
+    mediaAlbumKey: 'wedding-backdrop',
+  } satisfies PhotoAlbum,
+
   photographer: {
-    pageTitle: 'อัปโหลดรูป (ทีมถ่ายภาพ)',
-    /** ลิงก์โฟลเดอร์ Drive — ช่างอัปโหลดตรงใน Drive (ไม่ผ่าน Media API) */
+    pageTitle: 'อัปโหลดรูปและวิดีโอ (ทีมงาน)',
+    /** รหัสในลิงก์ทีมงาน — ต้องตรงกับ functions/src/teamAccess.ts */
+    teamKey: 'b7e4c1a9f2d84e60',
     uploadFolderUrl: '' as string,
+    albums: [
+      {
+        id: 'prewedding',
+        title: 'Pre-Wedding',
+        detail: 'ขึ้นที่หน้าภาพ แท็บ Pre-Wedding',
+        kind: 'photo',
+      },
+      {
+        id: 'wedding-day',
+        title: 'ภาพวันงาน',
+        detail: 'ขึ้นที่หน้าภาพ แท็บ Wedding Day',
+        kind: 'photo',
+      },
+      {
+        id: 'wedding-backdrop',
+        title: 'ภาพ Backdrop ทางเข้า',
+        detail: 'ขึ้นที่เมนูทางเข้า',
+        kind: 'photo',
+      },
+      {
+        id: 'vdo-present',
+        title: 'VDO Present',
+        detail: 'ขึ้นที่หน้าวิดีโอ หัวข้อ VDO Present',
+        kind: 'video',
+      },
+      {
+        id: 'vdo-wedding-day',
+        title: 'วิดีโอวันงาน',
+        detail: 'ขึ้นที่หน้าวิดีโอ หัวข้อ Wedding Day',
+        kind: 'video',
+      },
+    ],
     instructions: [
-      'กดปุ่มด้านล่าง → เปิด Google Drive ของทีมถ่าย',
-      'อัปโหลดรูปลงโฟลเดอร์โดยตรง (ลากไฟล์หรือปุ่ม New → File upload)',
-      'แยกโฟลเดอร์ย่อยตามวัน/มุมถ่าย (เช่น ceremony, reception) ตามที่ทีมตกลง',
-      'รูปที่แขกเห็นบนเว็บมาจากโฟลเดอร์ที่ sync กับ Media API — ไม่ใช่โฟลเดอร์นี้โดยอัตโนมัติ',
+      'ส่งลิงก์ด้านล่างให้ช่างภาพคนละชุด',
+      'ช่างเปิดลิงก์บนมือถือ เลือกไฟล์แล้วกดส่ง',
+      'ไฟล์ขึ้นบนหน้าเว็บของแขกทันที',
     ],
   },
 
@@ -226,9 +272,6 @@ export const siteContent = {
     pageTitle: 'แชร์ความประทับใจ',
     photoFormUrl: '' as string,
     videoMessageFormUrl: '' as string,
-    instructions: [
-      'อัปโหลดรูปความประทับใจจากงาน',
-      'อัดคลิปอวยพรถึงบ่าวสาว (ถ้ามีฟอร์มวิดีโอ)',
-    ],
+    instructions: ['อัปโหลดรูปความประทับใจจากงาน'],
   },
 }

@@ -1,3 +1,6 @@
+import { getGuestDeviceKey } from '../lib/guestDevice'
+import { siteContent } from './siteContent'
+
 export type MediaAlbumKey =
   | 'vdo-present'
   | 'vdo-wedding-day'
@@ -22,7 +25,6 @@ export type MediaListResponse = {
   items: MediaListItem[]
 }
 
-/** ค่า default สำหรับ GitHub Pages — override ได้ด้วย VITE_MEDIA_API_BASE */
 const PRODUCTION_MEDIA_API_BASE =
   'https://asia-southeast1-ice-mint-wedding.cloudfunctions.net/mediaApi'
 
@@ -35,6 +37,20 @@ export function getMediaApiBase(): string {
 
 export function isMediaApiConfigured(): boolean {
   return Boolean(getMediaApiBase())
+}
+
+export type MediaHealthResponse = {
+  ok: boolean
+  shareUploadReady?: boolean
+}
+
+export async function fetchMediaHealth(): Promise<MediaHealthResponse> {
+  const base = getMediaApiBase()
+  if (!base) throw new Error('media_api_not_configured')
+
+  const res = await fetch(`${base}/health`, { cache: 'no-store' })
+  if (!res.ok) throw new Error(`health_failed_${res.status}`)
+  return res.json() as Promise<MediaHealthResponse>
 }
 
 export async function fetchMediaList(
@@ -59,9 +75,52 @@ export async function fetchMediaList(
   return res.json() as Promise<MediaListResponse>
 }
 
+export async function fetchGuestLibrary(
+  kind: 'photo' | 'video',
+  page: number,
+  pageSize = 12,
+): Promise<MediaListResponse> {
+  const base = getMediaApiBase()
+  if (!base) throw new Error('media_api_not_configured')
+  const params = new URLSearchParams({
+    kind,
+    k: siteContent.photographer.teamKey,
+    page: String(page),
+    pageSize: String(pageSize),
+  })
+  const res = await fetch(`${base}/media/guest?${params}`, { cache: 'no-store' })
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string }
+    throw new Error(err.error ?? `list_failed_${res.status}`)
+  }
+  return res.json() as Promise<MediaListResponse>
+}
+
+export async function fetchMyUploads(
+  kind: 'photo' | 'video',
+  page: number,
+  pageSize = 12,
+): Promise<MediaListResponse> {
+  const base = getMediaApiBase()
+  if (!base) throw new Error('media_api_not_configured')
+  const params = new URLSearchParams({
+    kind,
+    key: getGuestDeviceKey(),
+    page: String(page),
+    pageSize: String(pageSize),
+  })
+  const res = await fetch(`${base}/media/mine?${params}`, { cache: 'no-store' })
+  if (!res.ok) {
+    const err = (await res.json().catch(() => ({}))) as { error?: string }
+    throw new Error(err.error ?? `list_failed_${res.status}`)
+  }
+  return res.json() as Promise<MediaListResponse>
+}
+
 export async function uploadGuestShare(
   type: 'photo' | 'video',
   sourceLabel: string,
+  guestName: string,
   file: Blob,
   fileName: string,
   onProgress?: (percent: number) => void,
@@ -72,6 +131,8 @@ export async function uploadGuestShare(
   const form = new FormData()
   form.append('type', type)
   form.append('sourceLabel', sourceLabel.trim())
+  form.append('guestKey', getGuestDeviceKey())
+  form.append('guestName', guestName.trim())
   form.append('file', file, fileName)
 
   await new Promise<void>((resolve, reject) => {
@@ -85,7 +146,7 @@ export async function uploadGuestShare(
       }
       try {
         const body = JSON.parse(xhr.responseText) as { error?: string }
-        reject(new Error(body.error ?? 'upload_failed'))
+        reject(new Error(body.error?.trim() || 'upload_failed'))
       } catch {
         reject(new Error('upload_failed'))
       }

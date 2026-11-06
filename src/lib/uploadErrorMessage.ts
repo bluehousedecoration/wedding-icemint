@@ -1,4 +1,5 @@
 const MESSAGES: Record<string, string> = {
+  storage_not_configured: 'ระบบรับไฟล์ยังไม่พร้อม — ลองใหม่ภายหลัง',
   drive_upload_not_configured:
     'ระบบอัปโหลดยังไม่เปิด — เจ้าภาพต้องตั้งค่า Google OAuth (npm run drive:oauth)',
   drive_sa_no_quota:

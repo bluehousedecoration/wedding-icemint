@@ -10,7 +10,7 @@ export function VideoPage() {
       <header className="hero compact">
         <p className="eyebrow">Video</p>
         <h1>วิดีโอ</h1>
-        <p className="sub">ชมและดาวน์โหลดบนหน้านี้ — ไม่เปิดลิงก์ Drive</p>
+        <p className="sub">ชมและดาวน์โหลดบนหน้านี้</p>
       </header>
 
       <section className="video-section">

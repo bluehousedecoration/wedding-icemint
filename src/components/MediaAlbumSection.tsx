@@ -14,7 +14,7 @@ function resolveAlbumKey(album: PhotoAlbum): MediaAlbumKey | undefined {
 export function MediaAlbumSection({ album }: MediaAlbumSectionProps) {
   const key = resolveAlbumKey(album)
   const { items, loading, error, hasMore, loadMore, loadingMore, enabled, demoMode } =
-    useMediaAlbum(key, 10)
+    useMediaAlbum(key, 12)
 
   if (!key) return null
 

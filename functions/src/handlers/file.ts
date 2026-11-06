@@ -1,60 +1,39 @@
 import type { Request, Response } from 'express'
-import { LIST_ALBUM_KEYS, UPLOAD_ALBUM_KEYS } from '../config'
-import { folderIdForAlbum, getDrive, isFileUnderFolder } from '../drive'
-
-const ALL_ROOT_KEYS = [...LIST_ALBUM_KEYS, ...UPLOAD_ALBUM_KEYS]
+import { getMediaBucket, mimeOf, objectNameFromId } from '../gcsMedia'
 
 export async function handleFile(req: Request, res: Response): Promise<void> {
   const fileId = String(req.query.fileId ?? '')
   const disposition = req.query.disposition === 'attachment' ? 'attachment' : 'inline'
+  const objectName = objectNameFromId(fileId)
 
-  if (!fileId) {
+  if (!objectName) {
     res.status(400).send('missing fileId')
     return
   }
 
-  const drive = getDrive()
-  if (!drive) {
-    res.status(503).send('drive_not_configured')
+  const bucket = getMediaBucket()
+  if (!bucket) {
+    res.status(503).send('storage_not_configured')
     return
   }
 
-  let allowed = false
-  for (const key of ALL_ROOT_KEYS) {
-    const rootId = folderIdForAlbum(key)
-    if (!rootId) continue
-    if (await isFileUnderFolder(drive, fileId, rootId)) {
-      allowed = true
-      break
-    }
-  }
-
-  if (!allowed) {
+  const file = bucket.file(objectName)
+  const [exists] = await file.exists()
+  if (!exists) {
     res.status(404).send('not_found')
     return
   }
 
-  const meta = await drive.files.get({
-    fileId,
-    fields: 'name, mimeType',
-    supportsAllDrives: true,
-  })
-
-  const fileName = meta.data.name ?? 'download'
-  const mime = meta.data.mimeType ?? 'application/octet-stream'
+  const [meta] = await file.getMetadata()
+  const fileName = objectName.split('/').pop() || 'download'
+  const mime = meta.contentType || mimeOf(file)
 
   res.setHeader('Content-Type', mime)
-  res.setHeader(
-    'Content-Disposition',
-    `${disposition}; filename="${encodeURIComponent(fileName)}"`,
-  )
+  res.setHeader('Content-Disposition', `${disposition}; filename="${encodeURIComponent(fileName)}"`)
+  res.setHeader('Cache-Control', 'private, max-age=300')
 
-  const stream = await drive.files.get(
-    { fileId, alt: 'media', supportsAllDrives: true },
-    { responseType: 'stream' },
-  )
-
-  stream.data
+  file
+    .createReadStream()
     .on('error', () => {
       if (!res.headersSent) res.status(500).end()
     })

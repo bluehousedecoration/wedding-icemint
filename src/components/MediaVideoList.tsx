@@ -33,6 +33,9 @@ export function MediaVideoList({
     return <p className="coming-soon">{emptyMessage}</p>
   }
 
+  const activeIndex = active ? items.findIndex((item) => item.id === active.id) : -1
+  const openIndex = activeIndex >= 0 ? activeIndex : null
+
   return (
     <div className="media-video-list">
       {demoMode ? (
@@ -59,7 +62,25 @@ export function MediaVideoList({
           {loadingMore ? 'กำลังโหลด…' : 'โหลดวิดีโอเพิ่ม'}
         </button>
       ) : null}
-      <MediaLightbox item={active} onClose={() => setActive(null)} />
+      <MediaLightbox
+        items={items}
+        index={openIndex}
+        canPrev={openIndex != null && openIndex > 0}
+        canNext={openIndex != null && (openIndex < items.length - 1 || hasMore)}
+        loadingMore={loadingMore}
+        onPrev={() => {
+          if (openIndex != null && openIndex > 0) setActive(items[openIndex - 1])
+        }}
+        onNext={() => {
+          if (openIndex == null) return
+          if (openIndex < items.length - 1) {
+            setActive(items[openIndex + 1])
+            return
+          }
+          if (hasMore && !loadingMore) loadMore()
+        }}
+        onClose={() => setActive(null)}
+      />
     </div>
   )
 }
