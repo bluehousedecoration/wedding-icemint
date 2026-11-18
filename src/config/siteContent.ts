@@ -33,6 +33,8 @@ export type HomeMenuItem = {
   /** ใช้ venueMapUrl จาก siteContent */
   mapLink?: boolean
   primary?: boolean
+  /** เลื่อนไปยังส่วนในหน้าแรก เช่น gift-envelope */
+  anchor?: string
 }
 
 export const siteContent = {
@@ -116,6 +118,16 @@ export const siteContent = {
   venueAddress:
     '55/24 ตำบลบางพลับ อำเภอปากเกร็ด จังหวัดนนทบุรี 11120 (ถนนราชพฤกษ์)',
   venueMapUrl: 'https://maps.app.goo.gl/zde8YuzuXEmvgBCV6' as string,
+
+  /** ซองของขวัญ — QR PromptPay บนหน้าแรก */
+  giftEnvelope: {
+    title: 'ใส่ซอง',
+    lead: 'สแกน QR เพื่อร่วมแสดงความยินดีกับบ่าวสาว',
+    qrImageUrl: '/gift-envelope-qr.jpg',
+    accountName: 'นาย ธนกฤต อัครกุลโชค',
+    accountNumber: 'xxx-x-x8181-x',
+    saveLabel: 'บันทึกรูป QR',
+  },
 
   /** ภาพหน้ากำหนดการ (public/) */
   scheduleTopImageUrl: '/schedule-top.png',

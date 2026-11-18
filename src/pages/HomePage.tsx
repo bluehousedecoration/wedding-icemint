@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { InvitationCardStack } from '../components/InvitationCardStack'
+import { GiftEnvelope, GiftScrollButton } from '../components/GiftEnvelope'
 import { HomeActionMenu } from '../components/HomeActionMenu'
 import { InvitationIntro } from '../components/InvitationIntro'
 import { InvitationVideoIntro } from '../components/InvitationVideoIntro'
@@ -37,6 +38,8 @@ function HomeMainContent({
         />
       ) : null}
 
+      {showInvitationCard ? <GiftScrollButton /> : null}
+
       <header className="hero">
         <p className="eyebrow">{siteContent.tagline}</p>
         <h1>{siteContent.couple}</h1>
@@ -51,6 +54,8 @@ function HomeMainContent({
       </header>
 
       <HomeActionMenu />
+
+      <GiftEnvelope />
 
       <section className="hint">
         <p>

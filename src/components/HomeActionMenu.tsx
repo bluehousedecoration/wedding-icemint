@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { siteContent } from '../config/siteContent'
+import { siteContent, type HomeMenuItem } from '../config/siteContent'
 
 function ActionContent({ label, detail }: { label: string; detail?: string }) {
   return (
@@ -15,7 +15,7 @@ export function HomeActionMenu() {
 
   return (
     <nav className="actions" aria-label="เมนูหลัก">
-      {siteContent.homeMenu.map((item) => {
+      {siteContent.homeMenu.map((item: HomeMenuItem) => {
         const className = `action${item.primary ? ' primary' : ''}`
 
         if (item.mapLink) {
@@ -28,6 +28,14 @@ export function HomeActionMenu() {
           }
           return (
             <a key={item.id} className={className} href={mapUrl} target="_blank" rel="noreferrer">
+              <ActionContent label={item.label} detail={item.detail} />
+            </a>
+          )
+        }
+
+        if (item.anchor) {
+          return (
+            <a key={item.id} className={className} href={`#${item.anchor}`}>
               <ActionContent label={item.label} detail={item.detail} />
             </a>
           )
